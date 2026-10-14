@@ -1,0 +1,7 @@
+Ironhack_prework/
+*.exe
+*.db
+*.zip
+__pycache__/
+.venv/
+.env
