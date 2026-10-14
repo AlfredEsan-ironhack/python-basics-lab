@@ -1,0 +1,22 @@
+BASIC SQL QUERIES LAB - SUMMARY
+
+Esan Alfred
+
+WHAT I LEARNED:
+This lab covered fundamental SQL skills including SELECT queries, WHERE filtering, NULL handling, and text/data type functions. I learned how to write queries that retrieve, filter, and transform data using various SQL functions like LOWER, UPPER, TRIM, CONCAT, CAST, and COALESCE. Understanding how to properly handle NULL values using IS NULL/IS NOT NULL and COALESCE was particularly important for data quality.
+
+CHALLENGES FACED:
+The main challenge was remembering that NULL comparisons work differently in SQL (NULL != NULL), so IS NULL/IS NOT NULL must be used instead of = NULL. Another consideration was understanding the proper order of operations when combining multiple functions - ensuring TRIM is applied before LOWER, for example. Working with date filtering also required attention to proper date format comparisons.
+
+HOW I HANDLED NULL VALUES:
+I used both IS NULL and IS NOT NULL operators to identify and filter NULL values. For displaying NULL values in results, I used the COALESCE function to replace NULL with a default value like 'Unknown'. This ensured that reports would show meaningful data rather than blank spaces.
+
+HOW SQL FUNCTIONS HELPED CLEAN DATA:
+Text functions (LOWER, UPPER, TRIM) standardized inconsistent data formatting - for example, converting mixed-case emails to lowercase for consistent comparisons. CONCAT allowed me to create formatted display strings combining multiple fields. CAST/type conversion ensured numeric and date fields displayed with proper formatting for business reports. Together, these functions transformed raw database records into clean, formatted data suitable for analytics and reporting.
+
+KEY TAKEAWAYS:
+- Always use IS NULL / IS NOT NULL for NULL comparisons
+- SQL functions can be nested and combined for complex transformations
+- Proper formatting using functions improves data readability
+- ORDER BY and LIMIT are essential for managing result sets
+- Comments in SQL scripts are crucial for maintainability
