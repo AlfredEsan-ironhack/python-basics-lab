@@ -379,7 +379,30 @@ The file went to `.Trash/Current` under its original path. The second entry is t
 
 ## Part B — Hue practical
 
-**TODO** (not started).
+## Part B: HDFS practical in Hue
+
+No CSV was provided, so I used two Cloudera course files that ship with the training VM:
+- `sales_data_01.csv`: Loudacre base stations (`data/base_stations.tsv`, 377 rows, 15191 bytes)
+- `sales_data_02.csv`: Loudacre order SKUs (`devsh/examples/example-data/orderskus.txt`, 5 orders, 114 bytes)
+
+Both were tab-separated. I checked no value contained a comma (`grep -c ","` → 0), converted tabs to commas with `tr`, and confirmed line counts and byte sizes were unchanged. Note: `sales_data_01.csv` holds tower data, not sales; the name follows the task's pattern.
+
+| Task | What I did | Result / proof |
+|---|---|---|
+| 1 | Inspected `/user/training` | Owner `training`, group `supergroup`, `drwxrwxrwx` (777). Wide open on this training VM; production home folders are usually 755 |
+| 2 | Created `lab1/input`, `lab1/output` | Listed with `hdfs dfs -ls -R` |
+| 3 | Uploaded both CSVs to `lab1/input` | HDFS sizes match local sizes (15191, 114) |
+| 4 | File details | 15191 and 114 bytes, replication 1 (single DataNode), block size 134217728 (128 MB). Each file uses one block but only its real size on disk |
+| 5 | Viewed contents | First lines match the source files |
+| 6 | Renamed to `sales_data_01.csv`, `sales_data_02.csv` | File times unchanged (14:49, 15:24): rename is metadata-only. The folder's time changed because its name list changed |
+| 7 | Copied both to `lab1/output` | Copies got a new time (15:35) because the data is rewritten. `md5sum` identical: `21a64ff8…`, `79cee1b8…` |
+| 8 | Created `lab1/archive`, moved originals there | `input` empty. Archive files keep their original times: a move is a path change only |
+| 9 | `chmod 644` on both archive files | `-rw-r--r--`. 6 = owner read+write, 4 = group read, 4 = others read |
+| 10 | Deleted from `output`, found in `.Trash/Current/user/training/lab1/output/`, restored, downloaded from `archive` | Restored files unchanged (`79cee1b8…`). Download in `~/Downloads`, same size and fingerprint |
+
+Notes:
+- Trash was off by default (`fs.trash.interval = 0`). I enabled it (1440 minutes) in `core-site.xml`, restarted HDFS and Hue, and tested it with a dummy delete before this task.
+- My backup `hdfs dfs -mv` restore command failed with "No such file" because Hue's Restore had already moved the files back; the next `-ls` confirms they were restored.
 
 ---
 

@@ -1,0 +1,162 @@
+Script started on Tue 03 Nov 2026 02:36:18 PM PST
+0;training@localhost:~?1034h[training@localhost ~]$ cat ~/training_materials/data/static_data/README.staticdata.txt
+This folder contains static copies of processed data for use by the course catchup/advance
+script to save time.  E.g. the output of sqoop imports, etc.  Students should not use this
+data for exercises.0;training@localhost:~[training@localhost ~]$ grep -c "," ~/training_materials/data/base_stations.tsv
+0
+0;training@localhost:~[training@localhost ~]$ tr '\t' ',' < ~/training_materials/data/base_stations.tsv > ~/base_stations.csv
+0;training@localhost:~[training@localhost ~]$ head -5 ~/base_stations.csv
+1,86502,Chambers,AZ,35.2375,-109.523
+2,86514,Teec Nos Pos,AZ,36.7797,-109.359
+3,85602,Benson,AZ,31.9883,-110.2941
+4,86011,Flagstaff,AZ,35.6308,-112.0524
+5,86016,Gray Mountain,AZ,35.6308,-112.0524
+0;training@localhost:~[training@localhost ~]$ wc -l ~/base_stations.csv
+377 /home/training/base_stations.csv
+0;training@localhost:~[training@localhost ~]$ wc -l ~/training_materials/data/base_stations.tsv
+377 /home/training/training_materials/data/base_stations.tsv
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user | grep training
+drwxrwxrwx   - training supergroup	    0 2026-11-03 12:03 /user/training
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls -R /user/training/lab1
+drwxrwxrwx   - training supergroup	    0 2026-11-03 14:46 /user/training/lab1/input
+drwxrwxrwx   - training supergroup	    0 2026-11-03 14:46 /user/training/lab1/output
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/lab1/input
+Found 1 items
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/input/base_stations.csv
+0;training@localhost:~[training@localhost ~]$ ls -l ~/base_stations.csv
+-rw-rw-r-- 1 training training 15191 Nov  3 14:38 /home/training/base_stations.csv
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -stat "%b bytes | replication %r | block size %o" /user/training/lab1/input/base_stations.csv
+15191 bytes | replication 1 | block size 134217728
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/input/base_stations.csv | head -5
+1,86502,Chambers,AZ,35.2375,-109.523
+2,86514,Teec Nos Pos,AZ,36.7797,-109.359
+3,85602,Benson,AZ,31.9883,-110.2941
+4,86011,Flagstaff,AZ,35.6308,-112.0524
+5,86016,Gray Mountain,AZ,35.6308,-112.0524
+cat: Unable to write to output stream.
+0;training@localhost:~[training@localhost ~]$ grep -i "create table" ~/training_materials/data/loudacre.sql
+CREATE TABLE `accountdevice` (
+CREATE TABLE `accounts` (
+CREATE TABLE `basestations` (
+CREATE TABLE `customerservicerep` (
+CREATE TABLE `device` (
+CREATE TABLE `knowledgebase` (
+CREATE TABLE `mostactivestations` (
+CREATE TABLE `webpage` (
+0;training@localhost:~[training@localhost ~]$ find ~/training_materials \( -iname "*sale*" -o -iname "*order*" -o -iname "*price*" -o -iname "*bill*" \)
+/home/training/training_materials/devsh/examples/example-data/orderskus.txt
+0;training@localhost:~[training@localhost ~]$ ls ~/training_materials/devsh
+0m01;34mexamples0m  01;34mexercises0m  01;34mscripts0m
+m0;training@localhost:~[training@localhost ~]$ ls -l ~/training_materials/devsh/examples/example-data/
+total 1672
+-rw-r--r-- 1 training training	    51 Oct 27  2016 catsat.txt
+-rw-r--r-- 1 training training	 13697 Oct 27  2016 kblist.txt
+-rw-r--r-- 1 training training 1127316 Oct 27  2016 latlon.tsv
+-rw-r--r-- 1 training training	   114 Oct 27  2016 orderskus.txt
+-rw-r--r-- 1 training training	    72 Oct 27  2016 pagelinks.txt
+-rw-r--r-- 1 training training	   209 Oct 27  2016 pcodes.json
+-rw-r--r-- 1 training training	   186 Oct 27  2016 people.json
+-rw-r--r-- 1 training training	   110 Oct 27  2016 purplecow.txt
+-rw-r--r-- 1 training training	    67 Oct 27  2016 user1.json
+-rw-r--r-- 1 training training	    65 Oct 27  2016 user2.json
+-rw-r--r-- 1 training training	    64 Oct 27  2016 userlist.tsv
+-rw-r--r-- 1 training training	521343 Oct 27  2016 weblogs.log
+-rw-r--r-- 1 training training	   201 Oct 27  2016 zcodes.json
+0;training@localhost:~[training@localhost ~]$ wc -l ~/training_materials/devsh/examples/example-data/orderskus.txt
+5 /home/training/training_materials/devsh/examples/example-data/orderskus.txt
+0;training@localhost:~[training@localhost ~]$ head -5 ~/training_materials/devsh/examples/example-data/orderskus.txt
+00001	sku010:sku933:sku022
+00002	sku912:sku331
+00003	sku888:sku022:sku010:sku594
+00004	sku411
+00005	sku331:sku010
+0;training@localhost:~[training@localhost ~]$ head -3 ~/training_materials/devsh/examples/example-data/orderskus.txt | cat -A
+00001^Isku010:sku933:sku022$
+00002^Isku912:sku331$
+00003^Isku888:sku022:sku010:sku594$
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ F=~/training_materials/devsh/examples/example-data/orderskus.txt
+0;training@localhost:~[training@localhost ~]$ grep -c "," $F
+0
+0;training@localhost:~[training@localhost ~]$ tr '\t' ',' < $F > ~/orderskus.csv
+0;training@localhost:~[training@localhost ~]$ cat ~/orderskus.csv
+00001,sku010:sku933:sku022
+00002,sku912:sku331
+00003,sku888:sku022:sku010:sku594
+00004,sku411
+00005,sku331:sku010
+0;training@localhost:~[training@localhost ~]$ wc -l $F ~/orderskus.csv
+  5 /home/training/training_materials/devsh/examples/example-data/orderskus.txt
+  5 /home/training/orderskus.csv
+ 10 total
+0;training@localhost:~[training@localhost ~]$ ls -l $F ~/orderskus.csv
+-rw-rw-r-- 1 training training 114 Nov	3 15:22 /home/training/orderskus.csv
+-rw-r--r-- 1 training training 114 Oct 27  2016 /home/training/training_materials/devsh/examples/example-data/orderskus.txt
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/lab1/input
+Found 2 items
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/input/base_stations.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:24 /user/training/lab1/input/orderskus.csv
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -stat "%n | %b bytes | replication %r | block size %o" /user/training/lab1/input/*
+base_stations.csv | 15191 bytes | replication 1 | block size 134217728
+orderskus.csv | 114 bytes | replication 1 | block size 134217728
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/input/orderskus.csv
+00001,sku010:sku933:sku022
+00002,sku912:sku331
+00003,sku888:sku022:sku010:sku594
+00004,sku411
+00005,sku331:sku010
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/lab1/input
+Found 2 items
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/input/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:24 /user/training/lab1/input/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls -R /user/training/lab1
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:32 /user/training/lab1/input
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/input/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:24 /user/training/lab1/input/sales_data_02.csv
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:35 /user/training/lab1/output
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 15:35 /user/training/lab1/output/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:35 /user/training/lab1/output/sales_data_02.csv
+K[training@localhost:~]$rhdfsndfso-cato/user/training/lab1/input/sales_data_02.csv | md5sum
+79cee1b819580a45d8fbb4815bd78c5c  -
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/output/sales_data_02.csv | md5sum
+79cee1b819580a45d8fbb4815bd78c5c  -
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/output/sales_data_1P1P1@01@1d5sum
+21a64ff8651ab60aa1357f518468ff76  -
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/ou111P1@i1@nCCCCCCCCCCCCCCCmd5sum
+21a64ff8651ab60aa1357f518468ff76  -
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls -R /user/training/lab1
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:39 /user/training/lab1/archive
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/archive/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:24 /user/training/lab1/archive/sales_data_02.csv
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:39 /user/training/lab1/input
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:35 /user/training/lab1/output
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 15:35 /user/training/lab1/output/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:35 /user/training/lab1/output/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/lab1/archive
+Found 2 items
+-rw-r--r--   1 training supergroup	15191 2026-11-03 14:49 /user/training/lab1/archive/sales_data_01.csv
+-rw-r--r--   1 training supergroup	  114 2026-11-03 15:24 /user/training/lab1/archive/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls -R /user/training/.Trash/Current/user/training/lab1
+drwxrwxrwx   - training supergroup	    0 2026-11-03 15:42 /user/training/.Trash/Current/user/training/lab1/output
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 15:35 /user/training/.Trash/Current/user/training/lab1/output/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:35 /user/training/.Trash/Current/user/training/lab1/output/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -mv /user/training/.Trash/Current/user/training/lab1/output/* /user/training/lab1/output/
+mv: `/user/training/.Trash/Current/user/training/lab1/output/*': No such file or directory
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/lab1/output
+Found 2 items
+-rw-rw-rw-   1 training supergroup	15191 2026-11-03 15:35 /user/training/lab1/output/sales_data_01.csv
+-rw-rw-rw-   1 training supergroup	  114 2026-11-03 15:35 /user/training/lab1/output/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/lab1/output/sales_data_02.csv | md5sum
+79cee1b819580a45d8fbb4815bd78c5c  -
+0;training@localhost:~[training@localhost ~]$ ls -l ~/Downloads/sales_data_0*
+-rw-rw-r-- 1 training training 15191 Nov  3 15:49 /home/training/Downloads/sales_data_01.csv
+-rw-rw-r-- 1 training training	 114 Nov  3 15:50 /home/training/Downloads/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ md5sum ~/Downloads/sales_data_02.csv
+79cee1b819580a45d8fbb4815bd78c5c  /home/training/Downloads/sales_data_02.csv
+0;training@localhost:~[training@localhost ~]$ exit
+exit
+
+Script done on Tue 03 Nov 2026 03:51:19 PM PST
