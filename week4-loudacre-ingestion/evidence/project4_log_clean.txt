@@ -1,0 +1,2034 @@
+Script started on Wed 04 Nov 2026 10:11:20 AM CET
+0;training@localhost:~?1034h[training@localhost ~]$ ^C
+CCCCCCCCCCCCCCCCCCCCCCCCdKrma-f-/mnt/hgfs/p4evidence/test.txtog_clean.txt").Countaltime
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 5.1.73 Source distribution
+
+Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+?1034hmysql> show databases;
++--------------------+
+| Database	     |
++--------------------+
+| information_schema |
+| hue		     |
+| loudacre	     |
+| metastore	     |
+| mysql		     |
+| test		     |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use loudacre;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_loudacre |
++--------------------+
+| accountdevice	     |
+| accounts	     |
+| basestations	     |
+| customerservicerep |
+| device	     |
+| knowledgebase	     |
+| mostactivestations |
+| webpage	     |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select count(*) from accounts;
++----------+
+| count(*) |
++----------+
+|   129761 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> eixiKxit
+Bye
+0;training@localhost:~[training@localhost ~]$ sudo service mysqld status
+mysqld (pid  1642) is running...
+0;training@localhost:~[training@localhost ~]$ sudo service hive-metastore status
+Hive Metastore is running60G[0;32m  OK	0;39m]
+0;training@localhost:~[training@localhost ~]$ sudo service hive-server2 status
+Hive Server2 is running60G[0;32m  OK  0;39m]
+0;training@localhost:~[training@localhost ~]$ sudo service impala-server status
+Impala Server is running60G[0;32m  OK  0;39m]
+0;training@localhost:~[training@localhost ~]$ CONN="--connect jdbc:mysql://localhost/loudacre --username training --password training"
+0;training@localhost:~[training@localhost ~]$ echo $CONN
+--connect jdbc:mysql://localhost/loudacre --username training --password training
+0;training@localhost:~[training@localhost ~]$ sqoop list-databases --connect jdbc:mysql://localhost --username training --password training
+26/11/04 10:40:00 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:40:00 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:40:00 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+information_schema
+hue
+loudacre
+metastore
+mysql
+test
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -mkdir /Loudacre
+
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /
+Found 4 items
+drwxrwxrwx   - training supergroup	    0 2026-11-04 10:40 /Loudacre
+drwxrwxrwt   - hdfs	supergroup	    0 2026-11-03 23:42 /tmp
+drwxrwxrwx   - hdfs	supergroup	    0 2026-11-03 19:46 /user
+drwxrwxrwx   - hdfs	supergroup	    0 2016-10-27 19:43 /var
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /
+Found 4 items
+drwxrwxrwx   - training supergroup	    0 2026-11-04 10:40 /Loudacre
+drwxrwxrwt   - hdfs	supergroup	    0 2026-11-03 23:42 /tmp
+drwxrwxrwx   - hdfs	supergroup	    0 2026-11-03 19:46 /user
+drwxrwxrwx   - hdfs	supergroup	    0 2016-10-27 19:43 /var
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining loudacre -e "select count(*) from accountdevice; select count(*) from webpage;"
++----------+
+| count(*) |
++----------+
+|   194764 |
++----------+
++----------+
+| count(*) |
++----------+
+|	53 |
++----------+
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accounts --target-dir /Loudacre/accounts
+26/11/04 10:41:55 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:41:55 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:41:55 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 10:41:55 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 10:41:55 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 10:41:55 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 10:41:55 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/f3f26309b8272803f38f5515428bf7af/accounts.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 10:41:58 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/f3f26309b8272803f38f5515428bf7af/accounts.jar
+26/11/04 10:41:58 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 10:41:58 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 10:41:58 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 10:41:58 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 10:41:58 INFO mapreduce.ImportJobBase: Beginning import of accounts
+26/11/04 10:41:58 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 10:41:58 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 10:41:58 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 10:41:59 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 10:42:02 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 10:42:02 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`acct_num`), MAX(`acct_num`) FROM `accounts`
+26/11/04 10:42:02 INFO db.IntegerSplitter: Split size: 32440; Num splits: 4 from: 1 to: 129761
+26/11/04 10:42:02 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 10:42:02 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0001
+26/11/04 10:42:03 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0001
+26/11/04 10:42:03 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0001/
+26/11/04 10:42:03 INFO mapreduce.Job: Running job: job_1793780955451_0001
+26/11/04 10:42:13 INFO mapreduce.Job: Job job_1793780955451_0001 running in uber mode : false
+26/11/04 10:42:13 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 10:42:20 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 10:42:25 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 10:42:30 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 10:42:35 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 10:42:35 INFO mapreduce.Job: Job job_1793780955451_0001 completed successfully
+26/11/04 10:42:36 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=560168
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=470
+		HDFS: Number of bytes written=18911238
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=15372
+		Total vcore-seconds taken by all map tasks=15372
+		Total megabyte-seconds taken by all map tasks=3935232
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=470
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=337
+		CPU time spent (ms)=12070
+		Physical memory (bytes) snapshot=788013056
+		Virtual memory (bytes) snapshot=8417374208
+		Total committed heap usage (bytes)=433586176
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=18911238
+26/11/04 10:42:36 INFO mapreduce.ImportJobBase: Transferred 18.0352 MB in 37.1579 seconds (497.014 KB/sec)
+26/11/04 10:42:36 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /Loudacre/accounts
+Found 5 items
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:42 /Loudacre/accounts/_SUCCESS
+-rw-rw-rw-   1 training supergroup    4746913 2026-11-04 10:42 /Loudacre/accounts/part-m-00000
+-rw-rw-rw-   1 training supergroup    4735242 2026-11-04 10:42 /Loudacre/accounts/part-m-00001
+-rw-rw-rw-   1 training supergroup    4718259 2026-11-04 10:42 /Loudacre/accounts/part-m-00002
+-rw-rw-rw-   1 training supergroup    4710824 2026-11-04 10:42 /Loudacre/accounts/part-m-00003
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /Loudacre/accounts/part-m-* | wc -l
+129761
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /Loudacre/accounts/part-m-00000 | head -3
+1,2008-10-23 16:05:05.0,null,Donald,Becton,2275 Washburn Street,Oakland,CA,94660,5100032418,2014-03-18 13:29:47.0,2014-03-18 13:29:47.0
+2,2008-11-12 03:00:01.0,null,Donna,Jones,3885 Elliott Street,San Francisco,CA,94171,4150835799,2014-03-18 13:29:47.0,2014-03-18 13:29:47.0
+3,2008-12-21 09:19:50.0,null,Dorthy,Chalmers,4073 Whaley Lane,San Mateo,CA,94479,6506877757,2014-03-18 13:29:47.0,2014-03-18 13:29:47.0
+cat: Unable to write to output stream.
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accountdevice --target-dir /Loudacre/accountdevice
+26/11/04 10:43:10 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:43:10 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:43:10 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 10:43:10 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 10:43:10 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accountdevice` AS t LIMIT 1
+26/11/04 10:43:10 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accountdevice` AS t LIMIT 1
+26/11/04 10:43:10 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/505d5338835c88a593bb044d49c6dcd0/accountdevice.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 10:43:12 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/505d5338835c88a593bb044d49c6dcd0/accountdevice.jar
+26/11/04 10:43:12 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 10:43:12 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 10:43:12 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 10:43:12 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 10:43:12 INFO mapreduce.ImportJobBase: Beginning import of accountdevice
+26/11/04 10:43:12 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 10:43:12 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 10:43:13 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 10:43:13 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 10:43:16 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 10:43:16 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`id`), MAX(`id`) FROM `accountdevice`
+26/11/04 10:43:16 INFO db.IntegerSplitter: Split size: 48690; Num splits: 4 from: 1 to: 194764
+26/11/04 10:43:16 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 10:43:16 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0002
+26/11/04 10:43:17 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0002
+26/11/04 10:43:17 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0002/
+26/11/04 10:43:17 INFO mapreduce.Job: Running job: job_1793780955451_0002
+26/11/04 10:43:24 INFO mapreduce.Job: Job job_1793780955451_0002 running in uber mode : false
+26/11/04 10:43:24 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 10:43:30 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 10:43:36 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 10:43:43 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 10:43:48 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 10:43:49 INFO mapreduce.Job: Job job_1793780955451_0002 completed successfully
+26/11/04 10:43:49 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=559976
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=424
+		HDFS: Number of bytes written=14486322
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=16423
+		Total vcore-seconds taken by all map tasks=16423
+		Total megabyte-seconds taken by all map tasks=4204288
+	Map-Reduce Framework
+		Map input records=194764
+		Map output records=194764
+		Input split bytes=424
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=332
+		CPU time spent (ms)=13620
+		Physical memory (bytes) snapshot=777162752
+		Virtual memory (bytes) snapshot=8403279872
+		Total committed heap usage (bytes)=419954688
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=14486322
+26/11/04 10:43:49 INFO mapreduce.ImportJobBase: Transferred 13.8152 MB in 36.4523 seconds (388.0908 KB/sec)
+26/11/04 10:43:49 INFO mapreduce.ImportJobBase: Retrieved 194764 records.
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table webpage --target-dir /Loudacre/webpagC
+26/11/04 10:44:33 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:44:33 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:44:34 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 10:44:34 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 10:44:34 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `webpage` AS t LIMIT 1
+26/11/04 10:44:34 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `webpage` AS t LIMIT 1
+26/11/04 10:44:34 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/1bba7d9754fd53a492977a926a29bd46/webpage.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 10:44:36 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/1bba7d9754fd53a492977a926a29bd46/webpage.jar
+26/11/04 10:44:36 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 10:44:36 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 10:44:36 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 10:44:36 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 10:44:36 INFO mapreduce.ImportJobBase: Beginning import of webpage
+26/11/04 10:44:36 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 10:44:36 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 10:44:37 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 10:44:37 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 10:44:40 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 10:44:40 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`web_page_num`), MAX(`web_page_num`) FROM `webpage`
+26/11/04 10:44:40 INFO db.IntegerSplitter: Split size: 13; Num splits: 4 from: 1 to: 53
+26/11/04 10:44:40 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 10:44:40 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0003
+26/11/04 10:44:40 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0003
+26/11/04 10:44:40 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0003/
+26/11/04 10:44:40 INFO mapreduce.Job: Running job: job_1793780955451_0003
+26/11/04 10:44:49 INFO mapreduce.Job: Job job_1793780955451_0003 running in uber mode : false
+26/11/04 10:44:49 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 10:44:54 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 10:44:59 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 10:45:03 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 10:45:09 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 10:45:09 INFO mapreduce.Job: Job job_1793780955451_0003 completed successfully
+26/11/04 10:45:09 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=559820
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=480
+		HDFS: Number of bytes written=3238
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=14101
+		Total vcore-seconds taken by all map tasks=14101
+		Total megabyte-seconds taken by all map tasks=3609856
+	Map-Reduce Framework
+		Map input records=53
+		Map output records=53
+		Input split bytes=480
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=313
+		CPU time spent (ms)=6260
+		Physical memory (bytes) snapshot=717238272
+		Virtual memory (bytes) snapshot=8389201920
+		Total committed heap usage (bytes)=435159040
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=3238
+26/11/04 10:45:09 INFO mapreduce.ImportJobBase: Transferred 3.1621 KB in 31.8823 seconds (101.5612 bytes/sec)
+26/11/04 10:45:09 INFO mapreduce.ImportJobBase: Retrieved 53 records.
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining loudacre -e "describe accounts; describe accountdevice; describe customerservicerep; describe basestations;"
++----------------+--------------+------+-----+---------+-------+
+| Field		 | Type		| Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| acct_num	 | int(11)	| NO   | PRI | NULL    |       |
+| acct_create_dt | datetime	| NO   |     | NULL    |       |
+| acct_close_dt	 | datetime	| YES  |     | NULL    |       |
+| first_name	 | varchar(255) | NO   |     | NULL    |       |
+| last_name	 | varchar(255) | NO   |     | NULL    |       |
+| address	 | varchar(255) | NO   |     | NULL    |       |
+| city		 | varchar(255) | NO   |     | NULL    |       |
+| state		 | varchar(255) | NO   |     | NULL    |       |
+| zipcode	 | varchar(255) | NO   |     | NULL    |       |
+| phone_number	 | varchar(255) | NO   |     | NULL    |       |
+| created	 | datetime	| NO   |     | NULL    |       |
+| modified	 | datetime	| NO   |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
++-------------------+--------------+------+-----+---------+----------------+
+| Field		    | Type	   | Null | Key | Default | Extra	   |
++-------------------+--------------+------+-----+---------+----------------+
+| id		    | int(11)	   | NO	  | PRI | NULL	  | auto_increment |
+| account_id	    | int(11)	   | NO	  | MUL | NULL	  |		   |
+| device_id	    | int(11)	   | NO	  | MUL | NULL	  |		   |
+| activation_date   | datetime	   | NO	  |	| NULL	  |		   |
+| account_device_id | varchar(255) | NO	  |	| NULL	  |		   |
++-------------------+--------------+------+-----+---------+----------------+
++----------+--------------+------+-----+---------+----------------+
+| Field	   | Type	  | Null | Key | Default | Extra	  |
++----------+--------------+------+-----+---------+----------------+
+| acct_num | int(11)	  | NO	 | PRI | NULL	 | auto_increment |
+| cs_name  | varchar(255) | NO	 |     | NULL	 |		  |
++----------+--------------+------+-----+---------+----------------+
++-------------+--------------+------+-----+---------+-------+
+| Field	      | Type	     | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| station_num | int(11)	     | NO   | PRI | NULL    |	    |
+| zipcode     | varchar(255) | NO   |	  | NULL    |	    |
+| city	      | varchar(255) | NO   |	  | NULL    |	    |
+| state	      | varchar(255) | NO   |	  | NULL    |	    |
+| latitude    | float	     | NO   |	  | NULL    |	    |
+| longitude   | float	     | NO   |	  | NULL    |	    |
++-------------+--------------+------+-----+---------+-------+
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accounts -m 10 --fields-terminated-by ':' --split-by state
+26/11/04 10:49:39 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:49:39 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:49:39 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 10:49:39 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 10:49:39 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 10:49:39 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 10:49:40 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/943a85767a37a559ee948dc2c8589851/accounts.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 10:49:42 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/943a85767a37a559ee948dc2c8589851/accounts.jar
+26/11/04 10:49:42 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 10:49:42 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 10:49:42 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 10:49:42 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 10:49:42 INFO mapreduce.ImportJobBase: Beginning import of accounts
+26/11/04 10:49:42 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 10:49:42 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 10:49:43 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 10:49:44 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 10:49:47 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 10:49:47 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`state`), MAX(`state`) FROM `accounts`
+26/11/04 10:49:47 WARN db.TextSplitter: Generating splits for a textual index column.
+26/11/04 10:49:47 WARN db.TextSplitter: If your database sorts in a case-insensitive order, this may result in a partial import or duplicate records.
+26/11/04 10:49:47 WARN db.TextSplitter: You are strongly encouraged to choose an integral split column.
+26/11/04 10:49:47 INFO mapreduce.JobSubmitter: number of splits:10
+26/11/04 10:49:47 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0004
+26/11/04 10:49:48 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0004
+26/11/04 10:49:48 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0004/
+26/11/04 10:49:48 INFO mapreduce.Job: Running job: job_1793780955451_0004
+26/11/04 10:49:55 INFO mapreduce.Job: Job job_1793780955451_0004 running in uber mode : false
+26/11/04 10:49:55 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 10:50:01 INFO mapreduce.Job:  map 10% reduce 0%
+26/11/04 10:50:07 INFO mapreduce.Job:  map 20% reduce 0%
+26/11/04 10:50:16 INFO mapreduce.Job:  map 30% reduce 0%
+26/11/04 10:50:22 INFO mapreduce.Job:  map 40% reduce 0%
+26/11/04 10:50:27 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 10:50:32 INFO mapreduce.Job:  map 60% reduce 0%
+26/11/04 10:50:37 INFO mapreduce.Job:  map 70% reduce 0%
+26/11/04 10:50:42 INFO mapreduce.Job:  map 80% reduce 0%
+26/11/04 10:50:47 INFO mapreduce.Job:  map 90% reduce 0%
+26/11/04 10:50:53 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 10:50:53 INFO mapreduce.Job: Job job_1793780955451_0004 completed successfully
+26/11/04 10:50:53 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=1400330
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=1421
+		HDFS: Number of bytes written=18911238
+		HDFS: Number of read operations=40
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=20
+	Job Counters
+		Launched map tasks=10
+		Other local map tasks=10
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=40523
+		Total vcore-seconds taken by all map tasks=40523
+		Total megabyte-seconds taken by all map tasks=10373888
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=1421
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=782
+		CPU time spent (ms)=22320
+		Physical memory (bytes) snapshot=1822490624
+		Virtual memory (bytes) snapshot=20968321024
+		Total committed heap usage (bytes)=1104150528
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=18911238
+26/11/04 10:50:53 INFO mapreduce.ImportJobBase: Transferred 18.0352 MB in 69.7367 seconds (264.8249 KB/sec)
+26/11/04 10:50:53 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /user/training/accounts
+Found 11 items
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/_SUCCESS
+-rw-rw-rw-   1 training supergroup    1838082 2026-11-04 10:50 /user/training/accounts/part-m-00000
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00001
+-rw-rw-rw-   1 training supergroup   13524081 2026-11-04 10:50 /user/training/accounts/part-m-00002
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00003
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00004
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00005
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00006
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00007
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 10:50 /user/training/accounts/part-m-00008
+-rw-rw-rw-   1 training supergroup    3549075 2026-11-04 10:50 /user/training/accounts/part-m-00009
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/accounts/part-m-* | wc -l
+129761
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/accounts/part-m-00000 | head -2
+29561:2012-07-05 14:07:25.0:null:Lydia:Lee:236 Clearview Drive:Phoenix:AZ:85209:9289392623:2014-03-18 13:30:41.0:2014-03-18 13:30:41.0
+29567:2012-09-27 01:45:48.0:null:Jose:Lopez:2974 Driftwood Road:Prescott:AZ:86382:9281040407:2014-03-18 13:30:41.0:2014-03-18 13:30:41.0
+cat: Unable to write to output stream.
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --query "SELECT CONCAT(first_name,' ',last_name) AS full_name FROM accounts WHERE \$CONDITIONS" -m 1 --target-dir /user/training/account_fullnames
+26/11/04 10:51:46 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 10:51:46 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 10:51:46 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 10:51:46 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 10:51:47 INFO manager.SqlManager: Executing SQL statement: SELECT CONCAT(first_name,' ',last_name) AS full_name FROM accounts WHERE  (1 = 0)
+26/11/04 10:51:47 INFO manager.SqlManager: Executing SQL statement: SELECT CONCAT(first_name,' ',last_name) AS full_name FROM accounts WHERE  (1 = 0)
+26/11/04 10:51:47 INFO manager.SqlManager: Executing SQL statement: SELECT CONCAT(first_name,' ',last_name) AS full_name FROM accounts WHERE  (1 = 0)
+26/11/04 10:51:47 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/1cfcb9a4b043ca2e8bcca3d1177e70b0/QueryResult.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 10:51:49 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/1cfcb9a4b043ca2e8bcca3d1177e70b0/QueryResult.jar
+26/11/04 10:51:49 INFO mapreduce.ImportJobBase: Beginning query import.
+26/11/04 10:51:49 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 10:51:49 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 10:51:50 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 10:51:50 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 10:51:53 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 10:51:53 INFO mapreduce.JobSubmitter: number of splits:1
+26/11/04 10:51:53 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0005
+26/11/04 10:51:54 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0005
+26/11/04 10:51:54 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0005/
+26/11/04 10:51:54 INFO mapreduce.Job: Running job: job_1793780955451_0005
+26/11/04 10:52:03 INFO mapreduce.Job: Job job_1793780955451_0005 running in uber mode : false
+26/11/04 10:52:03 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 10:52:09 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 10:52:10 INFO mapreduce.Job: Job job_1793780955451_0005 completed successfully
+26/11/04 10:52:10 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=139726
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=87
+		HDFS: Number of bytes written=1818698
+		HDFS: Number of read operations=4
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters
+		Launched map tasks=1
+		Other local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=4062
+		Total vcore-seconds taken by all map tasks=4062
+		Total megabyte-seconds taken by all map tasks=1039872
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=87
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=78
+		CPU time spent (ms)=2040
+		Physical memory (bytes) snapshot=175583232
+		Virtual memory (bytes) snapshot=2098126848
+		Total committed heap usage (bytes)=111673344
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=1818698
+26/11/04 10:52:10 INFO mapreduce.ImportJobBase: Transferred 1.7344 MB in 20.1707 seconds (88.0522 KB/sec)
+26/11/04 10:52:11 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/account_fullnames/part-m-00000 | head -3
+Donald Becton
+Donna Jones
+Dorthy Chalmers
+cat: Unable to write to output stream.
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/account_fullnames/part-m-* | wc -l
+129761
+K[training@localhost:~]$rmysqlg-utraining -ptraining loudacre -e "select count(*) from accountdevice where device_id between 10 and 50;"
++----------+
+| count(*) |
++----------+
+|   156825 |
++----------+
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accountdevice --where "device_id BETWEEN 10 AND 50" --target-dir /user/training/accountdevice_10_50
+26/11/04 11:03:21 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:03:21 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:03:21 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:03:21 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:03:22 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accountdevice` AS t LIMIT 1
+26/11/04 11:03:22 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accountdevice` AS t LIMIT 1
+26/11/04 11:03:22 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/9930b17f92fe205da65bea78179de8ad/accountdevice.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:03:24 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/9930b17f92fe205da65bea78179de8ad/accountdevice.jar
+26/11/04 11:03:24 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:03:24 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:03:24 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:03:24 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:03:24 INFO mapreduce.ImportJobBase: Beginning import of accountdevice
+26/11/04 11:03:24 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:03:24 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:03:26 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:03:26 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:03:29 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:03:29 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`id`), MAX(`id`) FROM `accountdevice` WHERE ( device_id BETWEEN 10 AND 50 )
+26/11/04 11:03:29 INFO db.IntegerSplitter: Split size: 48690; Num splits: 4 from: 2 to: 194764
+26/11/04 11:03:29 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 11:03:29 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0006
+26/11/04 11:03:30 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0006
+26/11/04 11:03:30 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0006/
+26/11/04 11:03:30 INFO mapreduce.Job: Running job: job_1793780955451_0006
+26/11/04 11:03:38 INFO mapreduce.Job: Job job_1793780955451_0006 running in uber mode : false
+26/11/04 11:03:38 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:03:44 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 11:03:50 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 11:03:55 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 11:04:02 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:04:03 INFO mapreduce.Job: Job job_1793780955451_0006 completed successfully
+26/11/04 11:04:03 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=561352
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=424
+		HDFS: Number of bytes written=11706234
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=17757
+		Total vcore-seconds taken by all map tasks=17757
+		Total megabyte-seconds taken by all map tasks=4545792
+	Map-Reduce Framework
+		Map input records=156825
+		Map output records=156825
+		Input split bytes=424
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=398
+		CPU time spent (ms)=14680
+		Physical memory (bytes) snapshot=771801088
+		Virtual memory (bytes) snapshot=8409313280
+		Total committed heap usage (bytes)=436207616
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=11706234
+26/11/04 11:04:03 INFO mapreduce.ImportJobBase: Transferred 11.1639 MB in 37.0776 seconds (308.3229 KB/sec)
+26/11/04 11:04:03 INFO mapreduce.ImportJobBase: Retrieved 156825 records.
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining loudacre -e "select * from customerservicerep where cs_name='Roger Miller';"
++----------+--------------+
+| acct_num | cs_name	  |
++----------+--------------+
+|      198 | Roger Miller |
++----------+--------------+
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table customerservicerep --columns acct_num --where "cs_name='Roger Miller'" -m 1 --target-dir /user/training/roger_miller_acct
+26/11/04 11:05:53 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:05:53 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:05:53 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:05:53 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:05:54 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `customerservicerep` AS t LIMIT 1
+26/11/04 11:05:54 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `customerservicerep` AS t LIMIT 1
+26/11/04 11:05:54 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/5fc7da7fc4b52eaf7d7164a92874c00b/customerservicerep.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:05:56 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/5fc7da7fc4b52eaf7d7164a92874c00b/customerservicerep.jar
+26/11/04 11:05:56 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:05:56 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:05:56 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:05:56 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:05:56 INFO mapreduce.ImportJobBase: Beginning import of customerservicerep
+26/11/04 11:05:56 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:05:56 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:05:57 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:05:57 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:05:59 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:05:59 INFO mapreduce.JobSubmitter: number of splits:1
+26/11/04 11:05:59 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0007
+26/11/04 11:06:00 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0007
+26/11/04 11:06:00 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0007/
+26/11/04 11:06:00 INFO mapreduce.Job: Running job: job_1793780955451_0007
+26/11/04 11:06:07 INFO mapreduce.Job: Job job_1793780955451_0007 running in uber mode : false
+26/11/04 11:06:07 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:06:12 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:06:13 INFO mapreduce.Job: Job job_1793780955451_0007 completed successfully
+26/11/04 11:06:14 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=140435
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=87
+		HDFS: Number of bytes written=4
+		HDFS: Number of read operations=4
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters
+		Launched map tasks=1
+		Other local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=3111
+		Total vcore-seconds taken by all map tasks=3111
+		Total megabyte-seconds taken by all map tasks=796416
+	Map-Reduce Framework
+		Map input records=1
+		Map output records=1
+		Input split bytes=87
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=67
+		CPU time spent (ms)=1300
+		Physical memory (bytes) snapshot=177967104
+		Virtual memory (bytes) snapshot=2097598464
+		Total committed heap usage (bytes)=109051904
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=4
+26/11/04 11:06:14 INFO mapreduce.ImportJobBase: Transferred 4 bytes in 16.5128 seconds (0.2422 bytes/sec)
+26/11/04 11:06:14 INFO mapreduce.ImportJobBase: Retrieved 1 records.
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -cat /user/training/roger_miller_acct/part-m-*
+198
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining loudacre -e "select state, count(*) from accounts group by state order by 2 desc;"
++-------+----------+
+| state | count(*) |
++-------+----------+
+| CA	|    92416 |
+| OR	|    13575 |
+| AZ	|    12754 |
+| NV	|    11016 |
++-------+----------+
+0;training@localhost:~[training@localhost ~]$ beeline -u jdbc:hive2://localhost:10000 -n training
+2026-11-04 11:12:31,082 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 3ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> quit37GK36GK35GK34GK!quit.
+Unknown command: quit.
+0: jdbc:hive2://localhost:10000> !quit
+Closing: 0: jdbc:hive2://localhost:10000
+K[training@localhost:~]$rSHOWnTABLES;host ~]$
+bash: SHOW: command not found
+0;training@localhost:~[training@localhost ~]$ beelineB-uSjdbc:hive2://localhost:10000 -n training
+2026-11-04 11:18:41,910 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 3ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> !quit.39GK34GKSHOW TABLES;
+INFO  : Compiling command(queryId=hive_20261104111919_24c8fcda-d662-4280-a9b6-0d0d4e064d8b): SHOW TABLES
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104111919_24c8fcda-d662-4280-a9b6-0d0d4e064d8b); Time taken: 1.034 seconds
+INFO  : Executing command(queryId=hive_20261104111919_24c8fcda-d662-4280-a9b6-0d0d4e064d8b): SHOW TABLES
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104111919_24c8fcda-d662-4280-a9b6-0d0d4e064d8b); Time taken: 0.126 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| device    |
++-----------+--+
+1 row selected (2.642 seconds)
+CCCCCCCCCCCCCCCCCCCCCCCCK!quitneL-u;jdbc:hive2://localhost:10000@-nctraining]$ Kbeeline -u jdbc:hive2://localhost:10000 -n training
+bash: !quit: event not found
+[training@localhost ~]$ hdfs dfs -cat /Loudacre/accounts/part-m-* | awk -F',' '{print NF}' | sort | uniq -c
+ 129761 12
+CCCCCCCCCCCCCCCCCCCCCCCC32Pbeelinec-uhjdbc:hive2://localhost:10000c-n/training/part-m-* | awk -F',' '{print NF}' | sort | uniq -c
+2026-11-04 11:23:08,290 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 4ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE accounts (
+0: jdbc:hive2://localhost:10000>   acct_num	  INT,
+0: jdbc:hive2://localhost:10000>   acct_create_dt TIMESTAMP,
+0: jdbc:hive2://localhost:10000>   acct_close_dt  TIMESTAMP,
+0: jdbc:hive2://localhost:10000>   first_name	  STRING,
+0: jdbc:hive2://localhost:10000>   last_name	  STRING,
+0: jdbc:hive2://localhost:10000>   address	  STRING,
+0: jdbc:hive2://localhost:10000>   city		  STRING,
+0: jdbc:hive2://localhost:10000>   state	  STRING,
+0: jdbc:hive2://localhost:10000>   zipcode	  STRING,
+0: jdbc:hive2://localhost:10000>   phone_number	  STRING,
+0: jdbc:hive2://localhost:10000>   created	  TIMESTAMP,
+0: jdbc:hive2://localhost:10000>   modified	  TIMESTAMP
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+0: jdbc:hive2://localhost:10000> STORED AS TEXTFILE
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/accounts';
+INFO  : Compiling command(queryId=hive_20261104112323_a8980a7b-c77d-4488-accb-ef0a3b691a0d): CREATE EXTERNAL TABLE accounts (
+  acct_num	 INT,
+  acct_create_dt TIMESTAMP,
+  acct_close_dt	 TIMESTAMP,
+  first_name	 STRING,
+  last_name	 STRING,
+  address	 STRING,
+  city		 STRING,
+  state		 STRING,
+  zipcode	 STRING,
+  phone_number	 STRING,
+  created	 TIMESTAMP,
+  modified	 TIMESTAMP
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/Loudacre/accounts'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104112323_a8980a7b-c77d-4488-accb-ef0a3b691a0d); Time taken: 0.154 seconds
+INFO  : Executing command(queryId=hive_20261104112323_a8980a7b-c77d-4488-accb-ef0a3b691a0d): CREATE EXTERNAL TABLE accounts (
+  acct_num	 INT,
+  acct_create_dt TIMESTAMP,
+  acct_close_dt	 TIMESTAMP,
+  first_name	 STRING,
+  last_name	 STRING,
+  address	 STRING,
+  city		 STRING,
+  state		 STRING,
+  zipcode	 STRING,
+  phone_number	 STRING,
+  created	 TIMESTAMP,
+  modified	 TIMESTAMP
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/Loudacre/accounts'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104112323_a8980a7b-c77d-4488-accb-ef0a3b691a0d); Time taken: 1.896 seconds
+INFO  : OK
+No rows affected (2.195 seconds)
+0: jdbc:hive2://localhost:10000> SELECT * FROM accounts LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104112525_8919e98b-0728-41fd-9ad6-f4a8d56dc00a): SELECT * FROM accounts LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:accounts.acct_num, type:int, comment:null), FieldSchema(name:accounts.acct_create_dt, type:timestamp, comment:null), FieldSchema(name:accounts.acct_close_dt, type:timestamp, comment:null), FieldSchema(name:accounts.first_name, type:string, comment:null), FieldSchema(name:accounts.last_name, type:string, comment:null), FieldSchema(name:accounts.address, type:string, comment:null), FieldSchema(name:accounts.city, type:string, comment:null), FieldSchema(name:accounts.state, type:string, comment:null), FieldSchema(name:accounts.zipcode, type:string, comment:null), FieldSchema(name:accounts.phone_number, type:string, comment:null), FieldSchema(name:accounts.created, type:timestamp, comment:null), FieldSchema(name:accounts.modified, type:timestamp, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104112525_8919e98b-0728-41fd-9ad6-f4a8d56dc00a); Time taken: 1.263 seconds
+INFO  : Executing command(queryId=hive_20261104112525_8919e98b-0728-41fd-9ad6-f4a8d56dc00a): SELECT * FROM accounts LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104112525_8919e98b-0728-41fd-9ad6-f4a8d56dc00a); Time taken: 0.003 seconds
+INFO  : OK
++--------------------+--------------------------+-------------------------+----------------------+---------------------+-----------------------+----------------+-----------------+-------------------+------------------------+------------------------+------------------------+--+
+| accounts.acct_num  | accounts.acct_create_dt	| accounts.acct_close_dt  | accounts.first_name	 | accounts.last_name  |   accounts.address    | accounts.city	| accounts.state  | accounts.zipcode  | accounts.phone_number  |    accounts.created	|   accounts.modified	 |
++--------------------+--------------------------+-------------------------+----------------------+---------------------+-----------------------+----------------+-----------------+-------------------+------------------------+------------------------+------------------------+--+
+| 1		     | 2008-10-23 16:05:05.0	| NULL			  | Donald		 | Becton	       | 2275 Washburn Street  | Oakland	| CA		  | 94660	      | 5100032418	       | 2014-03-18 13:29:47.0	| 2014-03-18 13:29:47.0	 |
+| 2		     | 2008-11-12 03:00:01.0	| NULL			  | Donna		 | Jones	       | 3885 Elliott Street   | San Francisco	| CA		  | 94171	      | 4150835799	       | 2014-03-18 13:29:47.0	| 2014-03-18 13:29:47.0	 |
+| 3		     | 2008-12-21 09:19:50.0	| NULL			  | Dorthy		 | Chalmers	       | 4073 Whaley Lane      | San Mateo	| CA		  | 94479	      | 6506877757	       | 2014-03-18 13:29:47.0	| 2014-03-18 13:29:47.0	 |
++--------------------+--------------------------+-------------------------+----------------------+---------------------+-----------------------+----------------+-----------------+-------------------+------------------------+------------------------+------------------------+--+
+3 rows selected (1.546 seconds)
+0: jdbc:hive2://localhost:10000> SELECT COUNT(*) FROM accounts;
+INFO  : Compiling command(queryId=hive_20261104112525_b6141aeb-3bc5-4f27-a89d-f03419f19ecb): SELECT COUNT(*) FROM accounts
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104112525_b6141aeb-3bc5-4f27-a89d-f03419f19ecb); Time taken: 0.234 seconds
+INFO  : Executing command(queryId=hive_20261104112525_b6141aeb-3bc5-4f27-a89d-f03419f19ecb): SELECT COUNT(*) FROM accounts
+INFO  : Query ID = hive_20261104112525_b6141aeb-3bc5-4f27-a89d-f03419f19ecb
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0008, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0008/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0008
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 11:25:28,992 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 11:25:34,331 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.44 sec
+INFO  : 2026-11-04 11:25:40,702 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 5.38 sec
+INFO  : MapReduce Total cumulative CPU time: 5 seconds 380 msec
+INFO  : Ended Job = job_1793780955451_0008
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 5.38 sec   HDFS Read: 18918855 HDFS Write: 7 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 5 seconds 380 msec
+INFO  : Completed executing command(queryId=hive_20261104112525_b6141aeb-3bc5-4f27-a89d-f03419f19ecb); Time taken: 20.917 seconds
+INFO  : OK
++---------+--+
+|   _c0	  |
++---------+--+
+| 129761  |
++---------+--+
+1 row selected (21.217 seconds)
+0: jdbc:hive2://localhost:10000> !quit
+Closing: 0: jdbc:hive2://localhost:10000
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accounts --as-avrodatafile --target-dir /Loudacre/accounts_avro
+26/11/04 11:28:50 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:28:50 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:28:50 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:28:50 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:28:51 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:28:51 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:28:51 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/9df653a6dff97e5a03d0e2bdb02a1344/accounts.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:28:53 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/9df653a6dff97e5a03d0e2bdb02a1344/accounts.jar
+26/11/04 11:28:53 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:28:53 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:28:53 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:28:53 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:28:53 INFO mapreduce.ImportJobBase: Beginning import of accounts
+26/11/04 11:28:53 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:28:53 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:28:54 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:28:54 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:28:54 INFO mapreduce.DataDrivenImportJob: Writing Avro schema file: /tmp/sqoop-training/compile/9df653a6dff97e5a03d0e2bdb02a1344/accounts.avsc
+26/11/04 11:28:54 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:28:55 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:28:56 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:28:56 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`acct_num`), MAX(`acct_num`) FROM `accounts`
+26/11/04 11:28:56 INFO db.IntegerSplitter: Split size: 32440; Num splits: 4 from: 1 to: 129761
+26/11/04 11:28:57 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 11:28:57 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0009
+26/11/04 11:28:57 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0009
+26/11/04 11:28:57 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0009/
+26/11/04 11:28:57 INFO mapreduce.Job: Running job: job_1793780955451_0009
+26/11/04 11:29:05 INFO mapreduce.Job: Job job_1793780955451_0009 running in uber mode : false
+26/11/04 11:29:05 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:29:13 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 11:29:20 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 11:29:27 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 11:29:33 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:29:33 INFO mapreduce.Job: Job job_1793780955451_0009 completed successfully
+26/11/04 11:29:33 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=564592
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=470
+		HDFS: Number of bytes written=12713531
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=19572
+		Total vcore-seconds taken by all map tasks=19572
+		Total megabyte-seconds taken by all map tasks=5010432
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=470
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=505
+		CPU time spent (ms)=23360
+		Physical memory (bytes) snapshot=866762752
+		Virtual memory (bytes) snapshot=8440766464
+		Total committed heap usage (bytes)=467140608
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=12713531
+26/11/04 11:29:33 INFO mapreduce.ImportJobBase: Transferred 12.1246 MB in 38.5121 seconds (322.3804 KB/sec)
+26/11/04 11:29:33 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accounts --as-parquetfile --target-dir /Loudacre/accounts_parquet
+26/11/04 11:30:00 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:30:00 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:30:00 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:30:00 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:30:00 INFO tool.CodeGenTool: Will generate java class as codegen_accounts
+26/11/04 11:30:00 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:30:00 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:30:00 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/d4c716c5d8aeb3b6ac6e81ca79fe98be/codegen_accounts.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:30:02 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/d4c716c5d8aeb3b6ac6e81ca79fe98be/codegen_accounts.jar
+26/11/04 11:30:02 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:30:02 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:30:02 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:30:02 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:30:02 INFO mapreduce.ImportJobBase: Beginning import of accounts
+26/11/04 11:30:02 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:30:02 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:30:03 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:30:03 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:30:05 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:30:05 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:30:07 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:30:07 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`acct_num`), MAX(`acct_num`) FROM `accounts`
+26/11/04 11:30:07 INFO db.IntegerSplitter: Split size: 32440; Num splits: 4 from: 1 to: 129761
+26/11/04 11:30:07 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 11:30:08 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0010
+26/11/04 11:30:08 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0010
+26/11/04 11:30:08 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0010/
+26/11/04 11:30:08 INFO mapreduce.Job: Running job: job_1793780955451_0010
+26/11/04 11:30:16 INFO mapreduce.Job: Job job_1793780955451_0010 running in uber mode : false
+26/11/04 11:30:16 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:30:25 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 11:30:34 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 11:30:47 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 11:30:58 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:30:58 INFO mapreduce.Job: Job job_1793780955451_0010 completed successfully
+26/11/04 11:30:58 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=567948
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=65658
+		HDFS: Number of bytes written=5904647
+		HDFS: Number of read operations=272
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=40
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=33405
+		Total vcore-seconds taken by all map tasks=33405
+		Total megabyte-seconds taken by all map tasks=8551680
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=470
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=1298
+		CPU time spent (ms)=48540
+		Physical memory (bytes) snapshot=1071300608
+		Virtual memory (bytes) snapshot=8512385024
+		Total committed heap usage (bytes)=568852480
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=0
+26/11/04 11:30:58 INFO mapreduce.ImportJobBase: Transferred 5.6311 MB in 53.1693 seconds (108.451 KB/sec)
+26/11/04 11:30:58 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+0;training@localhost:~[training@localhost ~]$ ls -l ~/accounts.avsc
+-rw-rw-r-- 1 training training 1825 Nov	 4 11:28 /home/training/accounts.avsc
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /Loudacre/accounts_avro
+Found 5 items
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 11:29 /Loudacre/accounts_avro/_SUCCESS
+-rw-rw-rw-   1 training supergroup    3189573 2026-11-04 11:29 /Loudacre/accounts_avro/part-m-00000.avro
+-rw-rw-rw-   1 training supergroup    3182838 2026-11-04 11:29 /Loudacre/accounts_avro/part-m-00001.avro
+-rw-rw-rw-   1 training supergroup    3176954 2026-11-04 11:29 /Loudacre/accounts_avro/part-m-00002.avro
+-rw-rw-rw-   1 training supergroup    3164166 2026-11-04 11:29 /Loudacre/accounts_avro/part-m-00003.avro
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls -R /Loudacre/accounts_parquet
+drwxrwxrwx   - training supergroup	    0 2026-11-04 11:30 /Loudacre/accounts_parquet/.metadata
+-rw-rw-rw-   1 training supergroup	  178 2026-11-04 11:30 /Loudacre/accounts_parquet/.metadata/descriptor.properties
+-rw-rw-rw-   1 training supergroup	 1825 2026-11-04 11:30 /Loudacre/accounts_parquet/.metadata/schema.avsc
+drwxrwxrwx   - training supergroup	    0 2026-11-04 11:30 /Loudacre/accounts_parquet/.metadata/schemas
+-rw-rw-rw-   1 training supergroup	 1825 2026-11-04 11:30 /Loudacre/accounts_parquet/.metadata/schemas/1.avsc
+drwxrwxrwx   - training supergroup	    0 2026-11-04 11:30 /Loudacre/accounts_parquet/.signals
+-rw-rw-rw-   1 training supergroup	    0 2026-11-04 11:30 /Loudacre/accounts_parquet/.signals/unbounded
+-rw-rw-rw-   1 training supergroup    1483786 2026-11-04 11:30 /Loudacre/accounts_parquet/5ea19307-9996-4873-99f6-66e4e5cb9bfb.parquet
+-rw-rw-rw-   1 training supergroup    1477405 2026-11-04 11:30 /Loudacre/accounts_parquet/a0af1cb9-1e21-4b0d-85be-9b460e0dc4b1.parquet
+-rw-rw-rw-   1 training supergroup    1477587 2026-11-04 11:30 /Loudacre/accounts_parquet/a65f9749-38eb-4b50-8916-34ee185bbb2a.parquet
+-rw-rw-rw-   1 training supergroup    1450113 2026-11-04 11:30 /Loudacre/accounts_parquet/d5904e86-17e5-4f7c-b9ca-062f1885c8c5.parquet
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -du -s -h /Loudacre/accounts /Loudacre/accounts_avro /Loudacre/accounts_parquet
+18.0 M	18.0 M	/Loudacre/accounts
+12.1 M	12.1 M	/Loudacre/accounts_avro
+5.6 M  5.6 M  /Loudacre/accounts_parquet
+0;training@localhost:~[training@localhost ~]$ ^C
+0;training@localhost:~[training@localhost ~]$ cat ~/accounts.avsc
+{
+  "type" : "record",
+  "name" : "accounts",
+  "doc" : "Sqoop import of accounts",
+  "fields" : [ {
+    "name" : "acct_num",
+    "type" : [ "null", "int" ],
+    "default" : null,
+    "columnName" : "acct_num",
+    "sqlType" : "4"
+  }, {
+    "name" : "acct_create_dt",
+    "type" : [ "null", "long" ],
+    "default" : null,
+    "columnName" : "acct_create_dt",
+    "sqlType" : "93"
+  }, {
+    "name" : "acct_close_dt",
+    "type" : [ "null", "long" ],
+    "default" : null,
+    "columnName" : "acct_close_dt",
+    "sqlType" : "93"
+  }, {
+    "name" : "first_name",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "first_name",
+    "sqlType" : "12"
+  }, {
+    "name" : "last_name",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "last_name",
+    "sqlType" : "12"
+  }, {
+    "name" : "address",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "address",
+    "sqlType" : "12"
+  }, {
+    "name" : "city",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "city",
+    "sqlType" : "12"
+  }, {
+    "name" : "state",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "state",
+    "sqlType" : "12"
+  }, {
+    "name" : "zipcode",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "zipcode",
+    "sqlType" : "12"
+  }, {
+    "name" : "phone_number",
+    "type" : [ "null", "string" ],
+    "default" : null,
+    "columnName" : "phone_number",
+    "sqlType" : "12"
+  }, {
+    "name" : "created",
+    "type" : [ "null", "long" ],
+    "default" : null,
+    "columnName" : "created",
+    "sqlType" : "93"
+  }, {
+    "name" : "modified",
+    "type" : [ "null", "long" ],
+    "default" : null,
+    "columnName" : "modified",
+    "sqlType" : "93"
+  } ],
+  "tableName" : "accounts"
+}0;training@localhost:~[training@localhost ~]$ hdfs dfs -mkdir -p /Loudacre/schemas
+
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -put ~/accounts.avsc /Loudacre/schemas/
+0;training@localhost:~[training@localhost ~]$ hdfs dfs -ls /Loudacre/schemas
+Found 1 items
+-rw-rw-rw-   1 training supergroup	 1825 2026-11-04 11:45 /Loudacre/schemas/accounts.avsc
+0;training@localhost:~[training@localhost ~]$ beeline -u jdbc:hive2://localhost:10000 -n training
+2026-11-04 11:46:16,847 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 5ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE accounts_avro
+0: jdbc:hive2://localhost:10000> STORED AS AVRO
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/accounts_avro'
+0: jdbc:hive2://localhost:10000> TBLPROPERTIES ('avro.schema.url'='hdfs:///Loudacre/schemas/accounts.avsc');
+INFO  : Compiling command(queryId=hive_20261104114646_8998acee-d49e-418b-87b5-2c6fb0443544): CREATE EXTERNAL TABLE accounts_avro
+STORED AS AVRO
+LOCATION '/Loudacre/accounts_avro'
+TBLPROPERTIES ('avro.schema.url'='hdfs:///Loudacre/schemas/accounts.avsc')
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104114646_8998acee-d49e-418b-87b5-2c6fb0443544); Time taken: 0.05 seconds
+INFO  : Executing command(queryId=hive_20261104114646_8998acee-d49e-418b-87b5-2c6fb0443544): CREATE EXTERNAL TABLE accounts_avro
+STORED AS AVRO
+LOCATION '/Loudacre/accounts_avro'
+TBLPROPERTIES ('avro.schema.url'='hdfs:///Loudacre/schemas/accounts.avsc')
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104114646_8998acee-d49e-418b-87b5-2c6fb0443544); Time taken: 0.257 seconds
+INFO  : OK
+No rows affected (0.439 seconds)
+0: jdbc:hive2://localhost:10000> DESCRIBE accounts_avro;
+INFO  : Compiling command(queryId=hive_20261104114747_68a1939d-8ae5-4f2f-b959-e862b8b61771): DESCRIBE accounts_avro
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:col_name, type:string, comment:from deserializer), FieldSchema(name:data_type, type:string, comment:from deserializer), FieldSchema(name:comment, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104114747_68a1939d-8ae5-4f2f-b959-e862b8b61771); Time taken: 0.133 seconds
+INFO  : Executing command(queryId=hive_20261104114747_68a1939d-8ae5-4f2f-b959-e862b8b61771): DESCRIBE accounts_avro
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104114747_68a1939d-8ae5-4f2f-b959-e862b8b61771); Time taken: 0.045 seconds
+INFO  : OK
++-----------------+------------+----------+--+
+|    col_name	  | data_type  | comment  |
++-----------------+------------+----------+--+
+| acct_num	  | int	       |	  |
+| acct_create_dt  | bigint     |	  |
+| acct_close_dt	  | bigint     |	  |
+| first_name	  | string     |	  |
+| last_name	  | string     |	  |
+| address	  | string     |	  |
+| city		  | string     |	  |
+| state		  | string     |	  |
+| zipcode	  | string     |	  |
+| phone_number	  | string     |	  |
+| created	  | bigint     |	  |
+| modified	  | bigint     |	  |
++-----------------+------------+----------+--+
+12 rows selected (0.264 seconds)
+0: jdbc:hive2://localhost:10000> SELECT acct_num, first_name, last_name, acct_create_dt FROM accounts_avro LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104114747_429f8749-257b-4818-95e0-bcec5110cb83): SELECT acct_num, first_name, last_name, acct_create_dt FROM accounts_avro LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:acct_num, type:int, comment:null), FieldSchema(name:first_name, type:string, comment:null), FieldSchema(name:last_name, type:string, comment:null), FieldSchema(name:acct_create_dt, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104114747_429f8749-257b-4818-95e0-bcec5110cb83); Time taken: 0.083 seconds
+INFO  : Executing command(queryId=hive_20261104114747_429f8749-257b-4818-95e0-bcec5110cb83): SELECT acct_num, first_name, last_name, acct_create_dt FROM accounts_avro LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104114747_429f8749-257b-4818-95e0-bcec5110cb83); Time taken: 0.002 seconds
+INFO  : OK
++-----------+-------------+------------+-----------------+--+
+| acct_num  | first_name  | last_name  | acct_create_dt	 |
++-----------+-------------+------------+-----------------+--+
+| 1	    | Donald	  | Becton     | 1224770705000	 |
+| 2	    | Donna	  | Jones      | 1226455201000	 |
+| 3	    | Dorthy	  | Chalmers   | 1229847590000	 |
++-----------+-------------+------------+-----------------+--+
+3 rows selected (0.206 seconds)
+0: jdbc:hive2://localhost:10000> SELECT COUNT(*) FROM accounts_avro;
+INFO  : Compiling command(queryId=hive_20261104114747_dee198be-b702-4940-b652-2845c8b15289): SELECT COUNT(*) FROM accounts_avro
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104114747_dee198be-b702-4940-b652-2845c8b15289); Time taken: 0.089 seconds
+INFO  : Executing command(queryId=hive_20261104114747_dee198be-b702-4940-b652-2845c8b15289): SELECT COUNT(*) FROM accounts_avro
+INFO  : Query ID = hive_20261104114747_dee198be-b702-4940-b652-2845c8b15289
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0011, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0011/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0011
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 11:47:24,557 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 11:47:33,019 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 9.49 sec
+INFO  : 2026-11-04 11:47:39,313 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 12.32 sec
+INFO  : MapReduce Total cumulative CPU time: 12 seconds 320 msec
+INFO  : Ended Job = job_1793780955451_0011
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 12.32 sec   HDFS Read: 12766819 HDFS Write: 7 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 12 seconds 320 msec
+INFO  : Completed executing command(queryId=hive_20261104114747_dee198be-b702-4940-b652-2845c8b15289); Time taken: 23.703 seconds
+INFO  : OK
++---------+--+
+|   _c0	  |
++---------+--+
+| 129761  |
++---------+--+
+1 row selected (23.872 seconds)
+0: jdbc:hive2://localhost:10000> SELECT acct_num, from_unixtime(CAST(acct_create_dt / 1000 AS BIGINT)) AS created_on
+0: jdbc:hive2://localhost:10000> FROM accounts_avro LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104114747_284045ae-6e55-4327-a262-04adabdf5fbe): SELECT acct_num, from_unixtime(CAST(acct_create_dt / 1000 AS BIGINT)) AS created_on
+FROM accounts_avro LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:acct_num, type:int, comment:null), FieldSchema(name:created_on, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104114747_284045ae-6e55-4327-a262-04adabdf5fbe); Time taken: 0.114 seconds
+INFO  : Executing command(queryId=hive_20261104114747_284045ae-6e55-4327-a262-04adabdf5fbe): SELECT acct_num, from_unixtime(CAST(acct_create_dt / 1000 AS BIGINT)) AS created_on
+FROM accounts_avro LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104114747_284045ae-6e55-4327-a262-04adabdf5fbe); Time taken: 0.002 seconds
+INFO  : OK
++-----------+----------------------+--+
+| acct_num  |	   created_on	   |
++-----------+----------------------+--+
+| 1	    | 2008-10-23 16:05:05  |
+| 2	    | 2008-11-12 03:00:01  |
+| 3	    | 2008-12-21 09:19:50  |
++-----------+----------------------+--+
+3 rows selected (0.174 seconds)
+0: jdbc:hive2://localhost:10000> SELECT acct_num, from_unixtime(CAST(acct_create_dt / 1000 AS BIGINT)) AS created_on
+0: jdbc:hive2://localhost:10000> FROM accounts_avro LIMIT 3;34GKSELECT acct_num, from_unixtime(CAST(acct_create_dt / 1000 AS BIGINT)) AS created_on34GKCREATE EXTERNAL TABLE accounts_parquet (
+0: jdbc:hive2://localhost:10000>   acct_num	  INT,
+0: jdbc:hive2://localhost:10000>   acct_create_dt BIGINT,
+0: jdbc:hive2://localhost:10000>   acct_close_dt  BIGINT,
+0: jdbc:hive2://localhost:10000>   first_name	  STRING,
+0: jdbc:hive2://localhost:10000>   last_name	  STRING,
+0: jdbc:hive2://localhost:10000>   address	  STRING,
+0: jdbc:hive2://localhost:10000>   city		  STRING,
+0: jdbc:hive2://localhost:10000>   state	  STRING,
+0: jdbc:hive2://localhost:10000>   zipcode	  STRING,
+0: jdbc:hive2://localhost:10000>   phone_number	  STRING,
+0: jdbc:hive2://localhost:10000>   created	  BIGINT,
+0: jdbc:hive2://localhost:10000>   modified	  BIGINT
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> STORED AS PARQUET
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/accounts_parquet';
+Error: Error while compiling statement: FAILED: ParseException line 2:0 missing EOF at 'CREATE' near 'created_on' (state=42000,code=40000)
+0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE accounts_parquet (
+0: jdbc:hive2://localhost:10000>   acct_num	  INT,
+0: jdbc:hive2://localhost:10000>   acct_create_dt BIGINT,
+0: jdbc:hive2://localhost:10000>   acct_close_dt  BIGINT,
+0: jdbc:hive2://localhost:10000>   first_name	  STRING,
+0: jdbc:hive2://localhost:10000>   last_name	  STRING,
+0: jdbc:hive2://localhost:10000>   address	  STRING,
+0: jdbc:hive2://localhost:10000>   city		  STRING,
+0: jdbc:hive2://localhost:10000>   state	  STRING,
+0: jdbc:hive2://localhost:10000>   zipcode	  STRING,
+0: jdbc:hive2://localhost:10000>   phone_number	  STRING,
+0: jdbc:hive2://localhost:10000>   created	  BIGINT,
+0: jdbc:hive2://localhost:10000>   modified	  BIGINT
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> STORED AS PARQUET
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/accounts_parquet';
+INFO  : Compiling command(queryId=hive_20261104115050_b7c76596-4754-41ed-bd9b-0d40fcd9e8c7): CREATE EXTERNAL TABLE accounts_parquet (
+  acct_num	 INT,
+  acct_create_dt BIGINT,
+  acct_close_dt	 BIGINT,
+  first_name	 STRING,
+  last_name	 STRING,
+  address	 STRING,
+  city		 STRING,
+  state		 STRING,
+  zipcode	 STRING,
+  phone_number	 STRING,
+  created	 BIGINT,
+  modified	 BIGINT
+)
+STORED AS PARQUET
+LOCATION '/Loudacre/accounts_parquet'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115050_b7c76596-4754-41ed-bd9b-0d40fcd9e8c7); Time taken: 0.024 seconds
+INFO  : Executing command(queryId=hive_20261104115050_b7c76596-4754-41ed-bd9b-0d40fcd9e8c7): CREATE EXTERNAL TABLE accounts_parquet (
+  acct_num	 INT,
+  acct_create_dt BIGINT,
+  acct_close_dt	 BIGINT,
+  first_name	 STRING,
+  last_name	 STRING,
+  address	 STRING,
+  city		 STRING,
+  state		 STRING,
+  zipcode	 STRING,
+  phone_number	 STRING,
+  created	 BIGINT,
+  modified	 BIGINT
+)
+STORED AS PARQUET
+LOCATION '/Loudacre/accounts_parquet'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104115050_b7c76596-4754-41ed-bd9b-0d40fcd9e8c7); Time taken: 0.093 seconds
+INFO  : OK
+No rows affected (0.143 seconds)
+0: jdbc:hive2://localhost:10000> 0;training@localhost:~[training@localhost ~]$ SELECT acct_num, first_name, last_name, state FROM accounts_parquet LIMIT 3;
+bash: SELECT: command not found
+0;training@localhost:~[training@localhost ~]$ SELECT COUNT(*) FROM accounts_parquet;
+bash: syntax error near unexpected token `('
+CCCCCCCCCCCCCCCCCCCCCCCC25Pbeelinec-uhjdbc:hive2://localhost:10000s-nntrainingt_name, state FROM accounts_parquet LIMIT 3;
+2026-11-04 11:52:32,043 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 3ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/accounts_parquet';34GKSTORED AS PARQUET34GK)34GKSTORED AS PARQUET34GKLOCATION '/Loudacre/accounts_parquet';34GKSELECT acct_num, first_name, last_name, state FROM accounts_parquet LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104115252_75fc7f4b-9f10-4844-a523-b043e7a9daa0): SELECT acct_num, first_name, last_name, state FROM accounts_parquet LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:acct_num, type:int, comment:null), FieldSchema(name:first_name, type:string, comment:null), FieldSchema(name:last_name, type:string, comment:null), FieldSchema(name:state, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115252_75fc7f4b-9f10-4844-a523-b043e7a9daa0); Time taken: 0.096 seconds
+INFO  : Executing command(queryId=hive_20261104115252_75fc7f4b-9f10-4844-a523-b043e7a9daa0): SELECT acct_num, first_name, last_name, state FROM accounts_parquet LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104115252_75fc7f4b-9f10-4844-a523-b043e7a9daa0); Time taken: 0.002 seconds
+INFO  : OK
++-----------+-------------+------------+--------+--+
+| acct_num  | first_name  | last_name  | state	|
++-----------+-------------+------------+--------+--+
+| 32441	    | Peter	  | Zachary    | CA	|
+| 32442	    | Duane	  | Ruiz       | CA	|
+| 32443	    | Desiree	  | Beall      | NV	|
++-----------+-------------+------------+--------+--+
+3 rows selected (0.822 seconds)
+0: jdbc:hive2://localhost:10000> SELECT COUNT(*) FROM accounts_parquet;
+INFO  : Compiling command(queryId=hive_20261104115353_ddf273c3-3573-47a1-8b6d-313608fae03c): SELECT COUNT(*) FROM accounts_parquet
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115353_ddf273c3-3573-47a1-8b6d-313608fae03c); Time taken: 0.065 seconds
+INFO  : Executing command(queryId=hive_20261104115353_ddf273c3-3573-47a1-8b6d-313608fae03c): SELECT COUNT(*) FROM accounts_parquet
+INFO  : Query ID = hive_20261104115353_ddf273c3-3573-47a1-8b6d-313608fae03c
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0012, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0012/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0012
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 11:53:10,131 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 11:53:16,508 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.36 sec
+INFO  : 2026-11-04 11:53:22,817 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.06 sec
+INFO  : MapReduce Total cumulative CPU time: 6 seconds 60 msec
+INFO  : Ended Job = job_1793780955451_0012
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.06 sec   HDFS Read: 27214 HDFS Write: 7 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 6 seconds 60 msec
+INFO  : Completed executing command(queryId=hive_20261104115353_ddf273c3-3573-47a1-8b6d-313608fae03c); Time taken: 19.626 seconds
+INFO  : OK
++---------+--+
+|   _c0	  |
++---------+--+
+| 129761  |
++---------+--+
+1 row selected (19.767 seconds)
+0: jdbc:hive2://localhost:10000> !qy36GKuit
+Closing: 0: jdbc:hive2://localhost:10000
+0;training@localhost:~[training@localhost ~]$ mysql -utraining -ptraining loudacre -e "select count(*) from basestations;"
++----------+
+| count(*) |
++----------+
+|      377 |
++----------+
+K[training@localhost:~]$rsqoopgimporth$CONN]--table basestations --hive-import --hive-table basestations -m 1
+26/11/04 11:54:14 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:54:14 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:54:14 INFO tool.BaseSqoopTool: Using Hive-specific delimiters for output. You can override
+26/11/04 11:54:14 INFO tool.BaseSqoopTool: delimiters with --fields-terminated-by, etc.
+26/11/04 11:54:14 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:54:14 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:54:15 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `basestations` AS t LIMIT 1
+26/11/04 11:54:15 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `basestations` AS t LIMIT 1
+26/11/04 11:54:15 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/97b9fba12cd03cefcd846ed54d49282e/basestations.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:54:17 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/97b9fba12cd03cefcd846ed54d49282e/basestations.jar
+26/11/04 11:54:17 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:54:17 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:54:17 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:54:17 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:54:18 INFO mapreduce.ImportJobBase: Beginning import of basestations
+26/11/04 11:54:18 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:54:18 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:54:19 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:54:19 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:54:21 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:54:21 INFO mapreduce.JobSubmitter: number of splits:1
+26/11/04 11:54:21 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0013
+26/11/04 11:54:21 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0013
+26/11/04 11:54:21 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0013/
+26/11/04 11:54:21 INFO mapreduce.Job: Running job: job_1793780955451_0013
+26/11/04 11:54:30 INFO mapreduce.Job: Job job_1793780955451_0013 running in uber mode : false
+26/11/04 11:54:30 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:54:36 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:54:37 INFO mapreduce.Job: Job job_1793780955451_0013 completed successfully
+26/11/04 11:54:37 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=139984
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=87
+		HDFS: Number of bytes written=14845
+		HDFS: Number of read operations=4
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters
+		Launched map tasks=1
+		Other local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=4195
+		Total vcore-seconds taken by all map tasks=4195
+		Total megabyte-seconds taken by all map tasks=1073920
+	Map-Reduce Framework
+		Map input records=377
+		Map output records=377
+		Input split bytes=87
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=63
+		CPU time spent (ms)=2250
+		Physical memory (bytes) snapshot=179609600
+		Virtual memory (bytes) snapshot=2096193536
+		Total committed heap usage (bytes)=120061952
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=14845
+26/11/04 11:54:37 INFO mapreduce.ImportJobBase: Transferred 14.4971 KB in 18.4498 seconds (804.6151 bytes/sec)
+26/11/04 11:54:37 INFO mapreduce.ImportJobBase: Retrieved 377 records.
+26/11/04 11:54:37 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `basestations` AS t LIMIT 1
+26/11/04 11:54:37 INFO hive.HiveImport: Loading uploaded data into Hive
+
+Logging initialized using configuration in jar:file:/usr/lib/hive/lib/hive-common-1.1.0-cdh5.7.0.jar!/hive-log4j.properties
+OK
+Time taken: 2.777 seconds
+Loading data to table default.basestations
+chgrp: changing ownership of 'hdfs://localhost:8020/user/hive/warehouse/basestations/part-m-00000': User does not belong to hive
+Table default.basestations stats: [numFiles=1, totalSize=14845]
+OK
+Time taken: 0.885 seconds
+CCCCCCCCCCCCCCCCCCCCCCCC25Pbeelinet-uijdbc:hive2://localhost:10000"-nltrainingt(*)ofrom-basestations;"hive-table basestations -m 1
+2026-11-04 11:54:56,704 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 3ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> SHOW TABLES;
+INFO  : Compiling command(queryId=hive_20261104115555_eb683ede-a903-479f-83c7-3b0206135c47): SHOW TABLES
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115555_eb683ede-a903-479f-83c7-3b0206135c47); Time taken: 0.007 seconds
+INFO  : Executing command(queryId=hive_20261104115555_eb683ede-a903-479f-83c7-3b0206135c47): SHOW TABLES
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104115555_eb683ede-a903-479f-83c7-3b0206135c47); Time taken: 0.072 seconds
+INFO  : OK
++-------------------+--+
+|     tab_name	    |
++-------------------+--+
+| accounts	    |
+| accounts_avro	    |
+| accounts_parquet  |
+| basestations	    |
+| device	    |
++-------------------+--+
+5 rows selected (0.358 seconds)
+0: jdbc:hive2://localhost:10000> DESCRIBE FORMATTED basestations;
+INFO  : Compiling command(queryId=hive_20261104115555_949e9195-5357-4cfd-8e2f-ba36139a843a): DESCRIBE FORMATTED basestations
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:col_name, type:string, comment:from deserializer), FieldSchema(name:data_type, type:string, comment:from deserializer), FieldSchema(name:comment, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115555_949e9195-5357-4cfd-8e2f-ba36139a843a); Time taken: 0.158 seconds
+INFO  : Executing command(queryId=hive_20261104115555_949e9195-5357-4cfd-8e2f-ba36139a843a): DESCRIBE FORMATTED basestations
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104115555_949e9195-5357-4cfd-8e2f-ba36139a843a); Time taken: 0.058 seconds
+INFO  : OK
++-------------------------------+-------------------------------------------------------------+-------------------------------------------+--+
+|	    col_name		|			   data_type			      |			 comment		  |
++-------------------------------+-------------------------------------------------------------+-------------------------------------------+--+
+| # col_name			| data_type						      | comment					  |
+|				| NULL							      | NULL					  |
+| station_num			| int							      |						  |
+| zipcode			| string						      |						  |
+| city				| string						      |						  |
+| state				| string						      |						  |
+| latitude			| double						      |						  |
+| longitude			| double						      |						  |
+|				| NULL							      | NULL					  |
+| # Detailed Table Information	| NULL							      | NULL					  |
+| Database:			| default						      | NULL					  |
+| Owner:			| training						      | NULL					  |
+| CreateTime:			| Wed Nov 04 11:54:42 CET 2026				      | NULL					  |
+| LastAccessTime:		| UNKNOWN						      | NULL					  |
+| Protect Mode:			| None							      | NULL					  |
+| Retention:			| 0							      | NULL					  |
+| Location:			| hdfs://localhost:8020/user/hive/warehouse/basestations      | NULL					  |
+| Table Type:			| MANAGED_TABLE						      | NULL					  |
+| Table Parameters:		| NULL							      | NULL					  |
+|				| COLUMN_STATS_ACCURATE					      | true					  |
+|				| comment						      | Imported by sqoop on 2026/11/04 11:54:37  |
+|				| numFiles						      | 1					  |
+|				| totalSize						      | 14845					  |
+|				| transient_lastDdlTime					      | 1793789682				  |
+|				| NULL							      | NULL					  |
+| # Storage Information		| NULL							      | NULL					  |
+| SerDe Library:		| org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe	      | NULL					  |
+| InputFormat:			| org.apache.hadoop.mapred.TextInputFormat		      | NULL					  |
+| OutputFormat:			| org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat  | NULL					  |
+| Compressed:			| No							      | NULL					  |
+| Num Buckets:			| -1							      | NULL					  |
+| Bucket Columns:		| []							      | NULL					  |
+| Sort Columns:			| []							      | NULL					  |
+| Storage Desc Params:		| NULL							      | NULL					  |
+|				| field.delim						      | \u0001					  |
+|				| line.delim						      | \n					  |
+|				| serialization.format					      | \u0001					  |
++-------------------------------+-------------------------------------------------------------+-------------------------------------------+--+
+37 rows selected (0.29 seconds)
+0: jdbc:hive2://localhost:10000> SELECT * FROM basestations LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104115555_030fa16c-09fa-46f9-90a1-0b599fc10238): SELECT * FROM basestations LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:basestations.station_num, type:int, comment:null), FieldSchema(name:basestations.zipcode, type:string, comment:null), FieldSchema(name:basestations.city, type:string, comment:null), FieldSchema(name:basestations.state, type:string, comment:null), FieldSchema(name:basestations.latitude, type:double, comment:null), FieldSchema(name:basestations.longitude, type:double, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115555_030fa16c-09fa-46f9-90a1-0b599fc10238); Time taken: 0.079 seconds
+INFO  : Executing command(queryId=hive_20261104115555_030fa16c-09fa-46f9-90a1-0b599fc10238): SELECT * FROM basestations LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104115555_030fa16c-09fa-46f9-90a1-0b599fc10238); Time taken: 0.003 seconds
+INFO  : OK
++---------------------------+-----------------------+--------------------+---------------------+------------------------+-------------------------+--+
+| basestations.station_num  | basestations.zipcode  | basestations.city	 | basestations.state  | basestations.latitude	| basestations.longitude  |
++---------------------------+-----------------------+--------------------+---------------------+------------------------+-------------------------+--+
+| 1			    | 86502		    | Chambers		 | AZ		       | 35.2375		| -109.523		  |
+| 2			    | 86514		    | Teec Nos Pos	 | AZ		       | 36.7797		| -109.359		  |
+| 3			    | 85602		    | Benson		 | AZ		       | 31.9883		| -110.294		  |
++---------------------------+-----------------------+--------------------+---------------------+------------------------+-------------------------+--+
+3 rows selected (0.166 seconds)
+0: jdbc:hive2://localhost:10000> SELECT COUNT(*) FROM basestations;
+INFO  : Compiling command(queryId=hive_20261104115555_519f9286-54b3-4b36-ab0f-4755b7a47980): SELECT COUNT(*) FROM basestations
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_c0, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115555_519f9286-54b3-4b36-ab0f-4755b7a47980); Time taken: 0.126 seconds
+INFO  : Executing command(queryId=hive_20261104115555_519f9286-54b3-4b36-ab0f-4755b7a47980): SELECT COUNT(*) FROM basestations
+INFO  : Query ID = hive_20261104115555_519f9286-54b3-4b36-ab0f-4755b7a47980
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0014, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0014/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0014
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 11:55:32,726 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 11:55:37,976 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.7 sec
+INFO  : 2026-11-04 11:55:44,262 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 4.89 sec
+INFO  : MapReduce Total cumulative CPU time: 4 seconds 890 msec
+INFO  : Ended Job = job_1793780955451_0014
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 4.89 sec   HDFS Read: 21718 HDFS Write: 4 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 4 seconds 890 msec
+INFO  : Completed executing command(queryId=hive_20261104115555_519f9286-54b3-4b36-ab0f-4755b7a47980); Time taken: 19.494 seconds
+INFO  : OK
++------+--+
+| _c0  |
++------+--+
+| 377  |
++------+--+
+1 row selected (19.703 seconds)
+0: jdbc:hive2://localhost:10000> !quit
+Closing: 0: jdbc:hive2://localhost:10000
+0;training@localhost:~[training@localhost ~]$ sqoop import $CONN --table accounts --columns "first_name,last_name" --target-dir /Loudacre/account_names
+26/11/04 11:56:17 INFO sqoop.Sqoop: Running Sqoop version: 1.4.6-cdh5.7.0
+26/11/04 11:56:17 WARN tool.BaseSqoopTool: Setting your password on the command-line is insecure. Consider using -P instead.
+26/11/04 11:56:17 INFO manager.MySQLManager: Preparing to use a MySQL streaming resultset.
+26/11/04 11:56:17 INFO tool.CodeGenTool: Beginning code generation
+26/11/04 11:56:18 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:56:18 INFO manager.SqlManager: Executing SQL statement: SELECT t.* FROM `accounts` AS t LIMIT 1
+26/11/04 11:56:18 INFO orm.CompilationManager: HADOOP_MAPRED_HOME is /usr/lib/hadoop-mapreduce
+Note: /tmp/sqoop-training/compile/240713e8d00a1f0b813f6d67d1b0107e/accounts.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+26/11/04 11:56:20 INFO orm.CompilationManager: Writing jar file: /tmp/sqoop-training/compile/240713e8d00a1f0b813f6d67d1b0107e/accounts.jar
+26/11/04 11:56:20 WARN manager.MySQLManager: It looks like you are importing from mysql.
+26/11/04 11:56:20 WARN manager.MySQLManager: This transfer can be faster! Use the --direct
+26/11/04 11:56:20 WARN manager.MySQLManager: option to exercise a MySQL-specific fast path.
+26/11/04 11:56:20 INFO manager.MySQLManager: Setting zero DATETIME behavior to convertToNull (mysql)
+26/11/04 11:56:20 INFO mapreduce.ImportJobBase: Beginning import of accounts
+26/11/04 11:56:20 INFO Configuration.deprecation: mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+26/11/04 11:56:20 INFO Configuration.deprecation: mapred.jar is deprecated. Instead, use mapreduce.job.jar
+26/11/04 11:56:21 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+26/11/04 11:56:21 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+26/11/04 11:56:24 INFO db.DBInputFormat: Using read commited transaction isolation
+26/11/04 11:56:24 INFO db.DataDrivenDBInputFormat: BoundingValsQuery: SELECT MIN(`acct_num`), MAX(`acct_num`) FROM `accounts`
+26/11/04 11:56:24 INFO db.IntegerSplitter: Split size: 32440; Num splits: 4 from: 1 to: 129761
+26/11/04 11:56:24 INFO mapreduce.JobSubmitter: number of splits:4
+26/11/04 11:56:25 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1793780955451_0015
+26/11/04 11:56:26 INFO impl.YarnClientImpl: Submitted application application_1793780955451_0015
+26/11/04 11:56:26 INFO mapreduce.Job: The url to track the job: http://localhost:8088/proxy/application_1793780955451_0015/
+26/11/04 11:56:26 INFO mapreduce.Job: Running job: job_1793780955451_0015
+26/11/04 11:56:33 INFO mapreduce.Job: Job job_1793780955451_0015 running in uber mode : false
+26/11/04 11:56:33 INFO mapreduce.Job:  map 0% reduce 0%
+26/11/04 11:56:40 INFO mapreduce.Job:  map 25% reduce 0%
+26/11/04 11:56:45 INFO mapreduce.Job:  map 50% reduce 0%
+26/11/04 11:56:50 INFO mapreduce.Job:  map 75% reduce 0%
+26/11/04 11:56:58 INFO mapreduce.Job:  map 100% reduce 0%
+26/11/04 11:56:58 INFO mapreduce.Job: Job job_1793780955451_0015 completed successfully
+26/11/04 11:56:58 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=560348
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=470
+		HDFS: Number of bytes written=1818698
+		HDFS: Number of read operations=16
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=8
+	Job Counters
+		Launched map tasks=4
+		Other local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=0
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=16999
+		Total vcore-seconds taken by all map tasks=16999
+		Total megabyte-seconds taken by all map tasks=4351744
+	Map-Reduce Framework
+		Map input records=129761
+		Map output records=129761
+		Input split bytes=470
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=312
+		CPU time spent (ms)=8030
+		Physical memory (bytes) snapshot=719671296
+		Virtual memory (bytes) snapshot=8390135808
+		Total committed heap usage (bytes)=455606272
+	File Input Format Counters
+		Bytes Read=0
+	File Output Format Counters
+		Bytes Written=1818698
+26/11/04 11:56:58 INFO mapreduce.ImportJobBase: Transferred 1.7344 MB in 37.0775 seconds (47.9017 KB/sec)
+26/11/04 11:56:58 INFO mapreduce.ImportJobBase: Retrieved 129761 records.
+CCCCCCCCCCCCCCCCCCCCCCCC54Pbeelinec-uhjdbc:hive2://localhost:10000--nbtrainingnts --columns "first_name,last_name" --target-dir /Loudacre/account_names
+2026-11-04 11:57:23,107 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 3ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE account_names (
+0: jdbc:hive2://localhost:10000>   first_name STRING,
+0: jdbc:hive2://localhost:10000>   last_name  STRING
+0: jdbc:hive2://localhost:10000> )
+0: jdbc:hive2://localhost:10000> ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+0: jdbc:hive2://localhost:10000> LOCATION '/Loudacre/account_names';
+INFO  : Compiling command(queryId=hive_20261104115757_2275571f-1feb-48e7-ac05-f854ba46309b): CREATE EXTERNAL TABLE account_names (
+  first_name STRING,
+  last_name  STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/Loudacre/account_names'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115757_2275571f-1feb-48e7-ac05-f854ba46309b); Time taken: 0.016 seconds
+INFO  : Executing command(queryId=hive_20261104115757_2275571f-1feb-48e7-ac05-f854ba46309b): CREATE EXTERNAL TABLE account_names (
+  first_name STRING,
+  last_name  STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/Loudacre/account_names'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20261104115757_2275571f-1feb-48e7-ac05-f854ba46309b); Time taken: 0.049 seconds
+INFO  : OK
+No rows affected (0.167 seconds)
+0: jdbc:hive2://localhost:10000>
+0: jdbc:hive2://localhost:10000> SELECT * FROM account_names LIMIT 3;
+INFO  : Compiling command(queryId=hive_20261104115757_76a8a6e4-f57e-4f7d-8851-14ba71e26ea1): SELECT * FROM account_names LIMIT 3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:account_names.first_name, type:string, comment:null), FieldSchema(name:account_names.last_name, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104115757_76a8a6e4-f57e-4f7d-8851-14ba71e26ea1); Time taken: 0.056 seconds
+INFO  : Executing command(queryId=hive_20261104115757_76a8a6e4-f57e-4f7d-8851-14ba71e26ea1): SELECT * FROM account_names LIMIT 3
+INFO  : Completed executing command(queryId=hive_20261104115757_76a8a6e4-f57e-4f7d-8851-14ba71e26ea1); Time taken: 0.002 seconds
+INFO  : OK
++---------------------------+--------------------------+--+
+| account_names.first_name  | account_names.last_name  |
++---------------------------+--------------------------+--+
+| Donald		    | Becton		       |
+| Donna			    | Jones		       |
+| Dorthy		    | Chalmers		       |
++---------------------------+--------------------------+--+
+3 rows selected (0.18 seconds)
+0: jdbc:hive2://localhost:10000> !quit
+Closing: 0: jdbc:hive2://localhost:10000
+0;training@localhost:~[training@localhost ~]$ impala-shell
+Starting Impala Shell without Kerberos authentication
+Connected to localhost.localdomain:21000
+Server version: impalad version 2.5.0-cdh5.7.0 RELEASE (build ad3f5adabedf56fe6bd9eea39147c067cc552703)
+?1034h***********************************************************************************
+Welcome to the Impala shell. Copyright (c) 2015 Cloudera, Inc. All rights reserved.
+(Impala Shell v2.5.0-cdh5.7.0 (ad3f5ad) built on Wed Mar 23 11:33:33 PDT 2016)
+
+To see a summary of a query's progress that updates in real-time, run 'set
+LIVE_PROGRESS=1;'.
+***********************************************************************************
+[localhost.localdomain:21000] > INVALIDATE METADATA;
+Query: invalidate METADATA
+
+Fetched 0 row(s) in 5.48s
+[localhost.localdomain:21000] > SHOW TABLES;
+Query: show TABLES
++------------------+
+| name		   |
++------------------+
+| account_names	   |
+| accounts	   |
+| accounts_avro	   |
+| accounts_parquet |
+| basestations	   |
+| device	   |
++------------------+
+Fetched 6 row(s) in 0.05s
+[localhost.localdomain:21000] > SELECT * FROM account_names LIMIT 3;
+Query: select * FROM account_names LIMIT 3
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Donald     | Becton	 |
+| Donna	     | Jones	 |
+| Dorthy     | Chalmers	 |
++------------+-----------+
+Fetched 3 row(s) in 4.75s
+[localhost.localdomain:21000] > SELECT COUNT(*) FROM account_names;
+Query: select COUNT(*) FROM account_names
++----------+
+| count(*) |
++----------+
+| 129761   |
++----------+
+Fetched 1 row(s) in 0.70s
+[localhost.localdomain:21000] > SELECT city, COUNT(*) AS num_accounts
+			      > FROM accounts
+			      > GROUP BY city
+			      > ORDER BY city
+			      > LIMIT 20;
+Query: select city, COUNT(*) AS num_accounts
+FROM accounts
+GROUP BY city
+ORDER BY city
+LIMIT 20
++---------------+--------------+
+| city		| num_accounts |
++---------------+--------------+
+| Alhambra	| 1487	       |
+| Anaheim	| 1544	       |
+| Bakersfield	| 3010	       |
+| Bend		| 1528	       |
+| Berkeley	| 1698	       |
+| Burbank	| 1495	       |
+| Carson City	| 1360	       |
+| Elko		| 1355	       |
+| Ely		| 1373	       |
+| Eugene	| 1520	       |
+| Eureka	| 1638	       |
+| Flagstaff	| 1181	       |
+| Fresno	| 4418	       |
+| Glendale	| 1493	       |
+| Globe		| 1163	       |
+| Industry	| 1513	       |
+| Inglewood	| 3023	       |
+| Kingman	| 1191	       |
+| Klamath Falls | 1463	       |
+| Las Vegas	| 4142	       |
++---------------+--------------+
+Fetched 20 row(s) in 3.35s
+[localhost.localdomain:21000] > SELECT city, last_name, first_name
+			      > FROM accounts
+			      > ORDER BY city, last_name, first_name
+			      > LIMIT 20;
+Query: select city, last_name, first_name
+FROM accounts
+ORDER BY city, last_name, first_name
+LIMIT 20
++----------+-----------+------------+
+| city	   | last_name | first_name |
++----------+-----------+------------+
+| Alhambra | Abrams    | Jodi	    |
+| Alhambra | Adams     | James	    |
+| Alhambra | Adams     | Modesto    |
+| Alhambra | Adamson   | Pauline    |
+| Alhambra | Adger     | James	    |
+| Alhambra | Adkins    | Jose	    |
+| Alhambra | Aguirre   | Larry	    |
+| Alhambra | Ahlers    | Sandra	    |
+| Alhambra | Alarcon   | Rose	    |
+| Alhambra | Albaugh   | Felicia    |
+| Alhambra | Albaugh   | Nancy	    |
+| Alhambra | Albert    | Denise	    |
+| Alhambra | Albright  | Robert	    |
+| Alhambra | Albright  | Ronald	    |
+| Alhambra | Aleman    | Ernest	    |
+| Alhambra | Alexander | Andre	    |
+| Alhambra | Allen     | Alice	    |
+| Alhambra | Allen     | John	    |
+| Alhambra | Allen     | Josephine  |
+| Alhambra | Allen     | Theodore   |
++----------+-----------+------------+
+Fetched 20 row(s) in 0.55s
+[localhost.localdomain:21000] > quiKt;
+Goodbye training
+0;training@localhost:~[training@localhost ~]$ beelines-uljdbc:hive2://localhost:10000 -n training
+2026-11-04 12:00:56,796 WARN  [main] mapreduce.TableMapReduceUtil: The hbase-prefix-tree module jar containing PrefixTreeCodec is not present.	Continuing without it.
+scan complete in 4ms
+Connecting to jdbc:hive2://localhost:10000
+Connected to: Apache Hive (version 1.1.0-cdh5.7.0)
+Driver: Hive JDBC (version 1.1.0-cdh5.7.0)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.1.0-cdh5.7.0 by Apache Hive
+0: jdbc:hive2://localhost:10000> SELECT city, COUNT(*) AS num_accounts
+0: jdbc:hive2://localhost:10000> FROM accounts
+0: jdbc:hive2://localhost:10000> GROUP BY city
+0: jdbc:hive2://localhost:10000> ORDER BY city
+0: jdbc:hive2://localhost:10000> LIMIT 20;
+INFO  : Compiling command(queryId=hive_20261104120101_38181b7c-122f-4fa7-95e3-6ee71a499fb6): SELECT city, COUNT(*) AS num_accounts
+FROM accounts
+GROUP BY city
+ORDER BY city
+LIMIT 20
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:city, type:string, comment:null), FieldSchema(name:num_accounts, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104120101_38181b7c-122f-4fa7-95e3-6ee71a499fb6); Time taken: 0.147 seconds
+INFO  : Executing command(queryId=hive_20261104120101_38181b7c-122f-4fa7-95e3-6ee71a499fb6): SELECT city, COUNT(*) AS num_accounts
+FROM accounts
+GROUP BY city
+ORDER BY city
+LIMIT 20
+INFO  : Query ID = hive_20261104120101_38181b7c-122f-4fa7-95e3-6ee71a499fb6
+INFO  : Total jobs = 2
+INFO  : Launching Job 1 out of 2
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0016, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0016/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0016
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 12:01:17,699 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 12:01:25,106 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.84 sec
+INFO  : 2026-11-04 12:01:32,527 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.3 sec
+INFO  : MapReduce Total cumulative CPU time: 6 seconds 300 msec
+INFO  : Ended Job = job_1793780955451_0016
+INFO  : Launching Job 2 out of 2
+INFO  : Starting task [Stage-2:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0017, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0017/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0017
+INFO  : Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 12:01:45,349 Stage-2 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 12:01:50,714 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 1.44 sec
+INFO  : 2026-11-04 12:01:58,069 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 4.6 sec
+INFO  : MapReduce Total cumulative CPU time: 4 seconds 600 msec
+INFO  : Ended Job = job_1793780955451_0017
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.3 sec   HDFS Read: 18918668 HDFS Write: 1739 SUCCESS
+INFO  : Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 4.6 sec   HDFS Read: 6380 HDFS Write: 269 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 10 seconds 900 msec
+INFO  : Completed executing command(queryId=hive_20261104120101_38181b7c-122f-4fa7-95e3-6ee71a499fb6); Time taken: 49.623 seconds
+INFO  : OK
++----------------+---------------+--+
+|      city	 | num_accounts	 |
++----------------+---------------+--+
+| Alhambra	 | 1487		 |
+| Anaheim	 | 1544		 |
+| Bakersfield	 | 3010		 |
+| Bend		 | 1528		 |
+| Berkeley	 | 1698		 |
+| Burbank	 | 1495		 |
+| Carson City	 | 1360		 |
+| Elko		 | 1355		 |
+| Ely		 | 1373		 |
+| Eugene	 | 1520		 |
+| Eureka	 | 1638		 |
+| Flagstaff	 | 1181		 |
+| Fresno	 | 4418		 |
+| Glendale	 | 1493		 |
+| Globe		 | 1163		 |
+| Industry	 | 1513		 |
+| Inglewood	 | 3023		 |
+| Kingman	 | 1191		 |
+| Klamath Falls	 | 1463		 |
+| Las Vegas	 | 4142		 |
++----------------+---------------+--+
+20 rows selected (49.932 seconds)
+0: jdbc:hive2://localhost:10000> SELECT city, last_name, first_name
+0: jdbc:hive2://localhost:10000> FROM accounts
+0: jdbc:hive2://localhost:10000> ORDER BY city, last_name, first_name
+0: jdbc:hive2://localhost:10000> LIMIT 20;
+INFO  : Compiling command(queryId=hive_20261104120202_c526cac4-2b44-4627-9f04-585f0636908b): SELECT city, last_name, first_name
+FROM accounts
+ORDER BY city, last_name, first_name
+LIMIT 20
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:city, type:string, comment:null), FieldSchema(name:last_name, type:string, comment:null), FieldSchema(name:first_name, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20261104120202_c526cac4-2b44-4627-9f04-585f0636908b); Time taken: 0.09 seconds
+INFO  : Executing command(queryId=hive_20261104120202_c526cac4-2b44-4627-9f04-585f0636908b): SELECT city, last_name, first_name
+FROM accounts
+ORDER BY city, last_name, first_name
+LIMIT 20
+INFO  : Query ID = hive_20261104120202_c526cac4-2b44-4627-9f04-585f0636908b
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :	  set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :	  set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :	  set mapreduce.job.reduces=<number>
+INFO  : Starting Job = job_1793780955451_0018, Tracking URL = http://localhost:8088/proxy/application_1793780955451_0018/
+INFO  : Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1793780955451_0018
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2026-11-04 12:02:13,276 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2026-11-04 12:02:21,852 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.81 sec
+INFO  : 2026-11-04 12:02:28,144 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 9.93 sec
+INFO  : MapReduce Total cumulative CPU time: 9 seconds 930 msec
+INFO  : Ended Job = job_1793780955451_0018
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 9.93 sec   HDFS Read: 18918415 HDFS Write: 459 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 9 seconds 930 msec
+INFO  : Completed executing command(queryId=hive_20261104120202_c526cac4-2b44-4627-9f04-585f0636908b); Time taken: 22.786 seconds
+INFO  : OK
++-----------+------------+-------------+--+
+|   city    | last_name	 | first_name  |
++-----------+------------+-------------+--+
+| Alhambra  | Abrams	 | Jodi	       |
+| Alhambra  | Adams	 | James       |
+| Alhambra  | Adams	 | Modesto     |
+| Alhambra  | Adamson	 | Pauline     |
+| Alhambra  | Adger	 | James       |
+| Alhambra  | Adkins	 | Jose	       |
+| Alhambra  | Aguirre	 | Larry       |
+| Alhambra  | Ahlers	 | Sandra      |
+| Alhambra  | Alarcon	 | Rose	       |
+| Alhambra  | Albaugh	 | Felicia     |
+| Alhambra  | Albaugh	 | Nancy       |
+| Alhambra  | Albert	 | Denise      |
+| Alhambra  | Albright	 | Robert      |
+| Alhambra  | Albright	 | Ronald      |
+| Alhambra  | Aleman	 | Ernest      |
+| Alhambra  | Alexander	 | Andre       |
+| Alhambra  | Allen	 | Alice       |
+| Alhambra  | Allen	 | John	       |
+| Alhambra  | Allen	 | Josephine   |
+| Alhambra  | Allen	 | Theodore    |
++-----------+------------+-------------+--+
+20 rows selected (22.933 seconds)
+0: jdbc:hive2://localhost:10000> qui36GK35GK34GK!quit
+Closing: 0: jdbc:hive2://localhost:10000
+0;training@localhost:~[training@localhost ~]$ impala-shell -B --output_delimiter=',' -o /mnt/hgfs/p4evidence/q6a_impala.csv -q "SELECT city, COUNT(*) FROM accounts GROUP BY city ORDER BY city"
+Starting Impala Shell without Kerberos authentication
+Connected to localhost.localdomain:21000
+Server version: impalad version 2.5.0-cdh5.7.0 RELEASE (build ad3f5adabedf56fe6bd9eea39147c067cc552703)
+Query: select city, COUNT(*) FROM accounts GROUP BY city ORDER BY city
+Fetched 56 row(s) in 0.54s
+0;training@localhost:~[training@localhost ~]$ exit
+exit
+
+Script done on Wed 04 Nov 2026 12:19:26 PM CET
